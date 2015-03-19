@@ -139,16 +139,16 @@ public class Run implements ActionListener, ItemListener {
 		
 		if(color.equals("red"))
 		{
-			System.out.println("Last Player : Red");
+			System.out.println("Last Move : Red");
 			return "red";
 		}
 		else if(color.equals("green")){
-			System.out.println("Last Player : Green");
+			System.out.println("Last Move : Green");
 			return "green";
 		}
 		else
 		{
-			System.out.println("Last Player : None");
+			System.out.println("Last Move : None");
 		}
 		
 return null;		
@@ -254,7 +254,10 @@ return null;
             System.out.println(board);
             counter=counter+1;
 		}
+		System.out.println("Score: 0-0");
+		System.out.println("(Red First)");
 		 System.out.println("Moves so Far::"+counter);
+		 System.out.println("***********************");
 		if (board.over() == true) {
 			gameOver();
 		}
