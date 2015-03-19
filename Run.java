@@ -7,12 +7,19 @@
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.text.Document;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 
 public class Run implements ActionListener, ItemListener {
 	// create objects
+	static int counter=0;
 	static SimpleBoard board = new SimpleBoard();
 	static JFrame frameMainWindow;
 	static JFrame frameWin;
@@ -32,7 +39,7 @@ public class Run implements ActionListener, ItemListener {
 		JMenu menu, submenu, subsubmenu;
 		JMenuItem menuItem;
 		JRadioButtonMenuItem rbMenuItem;
-		int[][] boardView;
+	//	int[][] boardView;
 
 		// create and build first menu
 		menuBar = new JMenuBar();
@@ -103,11 +110,15 @@ public class Run implements ActionListener, ItemListener {
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
 		menu.addSeparator();
+		menuItem = new JMenuItem("Report");
+		menuItem.setName("Report");
+		menuItem.addActionListener(this);
+		menu.add(menuItem);
+		menu.addSeparator();
 		menuItem = new JMenuItem("About");
 		menuItem.setName("About");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
-
 		return menuBar;
 	}
 
@@ -124,6 +135,25 @@ public class Run implements ActionListener, ItemListener {
 		return layeredGameBoard;
 	}
 
+	private static String playerColor(String color) {
+		
+		if(color.equals("red"))
+		{
+			System.out.println("Last Player : Red");
+			return "red";
+		}
+		else if(color.equals("green")){
+			System.out.println("Last Player : Green");
+			return "green";
+		}
+		else
+		{
+			System.out.println("Last Player : None");
+		}
+		
+return null;		
+	}
+	
 	public static void createNewGame() {
 		board = new SimpleBoard();
                 board.out=false;
@@ -135,23 +165,8 @@ public class Run implements ActionListener, ItemListener {
 		frameMainWindow.setJMenuBar( conFour.createMenuBar() );
 		Component compMainWindowContents = createContentComponents();
 		frameMainWindow.getContentPane().add(compMainWindowContents, BorderLayout.CENTER);
-
 		// create the status bar panel and shove it down the bottom of the frame
-		JPanel statusPanel = new JPanel();
-		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-		frameMainWindow.add(statusPanel, BorderLayout.SOUTH);
-		statusPanel.setPreferredSize(new Dimension(frameMainWindow.getWidth(), 16));
-		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
-		JLabel statusLabel = new JLabel("Last Player :");
-		JLabel statusLabel1 = new JLabel("Moves so far :");
-		JLabel statusLabel2 = new JLabel("                                         Scores 0-0");
-		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		statusLabel1.setHorizontalAlignment(SwingConstants.LEFT);
-		statusLabel2.setHorizontalAlignment(SwingConstants.LEFT);
-		statusPanel.add(statusLabel);
-		statusPanel.add(statusLabel2);
-		statusPanel.add(Box.createHorizontalGlue());
-		statusPanel.add(statusLabel1);
+		
 
 		frameMainWindow.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -162,7 +177,6 @@ public class Run implements ActionListener, ItemListener {
 		// show window
 		frameMainWindow.pack();
 		frameMainWindow.setVisible(true);
-
 		if (p1TypeFlag == 1) {
 			p1.go(board);
 			redrawBoard();
@@ -179,6 +193,23 @@ public class Run implements ActionListener, ItemListener {
 			panelBoardNumbers.setVisible(false);
 			panelBoardNumbers.repaint();
 		}
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+		JLabel statusLabel = new JLabel("Last Player :");
+		JLabel statusLabel1 = new JLabel("Moves so far :");
+		JLabel statusLabel3 = new JLabel("   ( Red First )");
+		JLabel statusLabel2 = new JLabel("                                         Scores 0-0");
+		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		statusLabel1.setHorizontalAlignment(SwingConstants.LEFT);
+		statusLabel2.setHorizontalAlignment(SwingConstants.LEFT);
+		statusPanel.add(statusLabel);
+		statusPanel.add(statusLabel2);
+		statusPanel.add(statusLabel3);
+		statusPanel.add(Box.createHorizontalGlue());
+		statusPanel.add(statusLabel1);
+		frameMainWindow.add(statusPanel, BorderLayout.SOUTH);
+		statusPanel.setPreferredSize(new Dimension(frameMainWindow.getWidth(), 16));
 	}
 
 	public static void paintRed(int row, int col) {
@@ -189,6 +220,7 @@ public class Run implements ActionListener, ItemListener {
 		redIconLabel.setBounds(27 + xOffset, 27 + yOffset, redIcon.getIconWidth(),redIcon.getIconHeight());
 		layeredGameBoard.add(redIconLabel, new Integer(0), 0);
 		frameMainWindow.paint(frameMainWindow.getGraphics());
+		
 	}
 
 	public static void paintBlack(int row, int col) {
@@ -202,7 +234,7 @@ public class Run implements ActionListener, ItemListener {
 	}
 
 	public static void redrawBoard() {
-int counter=0;
+		
 		int[][] boardView = board.view();
 		int r = board.m_x;
 		int c = board.m_y;
@@ -210,18 +242,25 @@ int counter=0;
 		int playerPos = boardView[r][c];
 		if (playerPos == 1) {
 			// paint red at [r][c]
-			counter=counter+1;
 			paintRed(r, c);
+			playerColor("red");
+			System.out.println("Current Board View");
+            System.out.println(board);counter=counter+1;
 		} else if (playerPos == 2) {
 			// paint green at [r][c]
-			counter=counter+1;
 			paintBlack(r, c);
+			playerColor("green");
+			System.out.println("Current Board View");
+            System.out.println(board);
+            counter=counter+1;
 		}
+		 System.out.println("Moves so Far::"+counter);
 		if (board.over() == true) {
 			gameOver();
 		}
 
 	}
+
 
 	public static void game(){
 
@@ -241,7 +280,24 @@ int counter=0;
                 }
                 
         }
-
+              
+                
+               /* JTextArea textArea = new JTextArea();
+            	Document doc = textArea.getDocument();
+            	PrintStream out = new PrintStream(new DocumentOutputStream(doc));
+                out.println("Current Board View");
+                out.println(board);
+                WindowListener l = new WindowAdapter() {
+            	    public void windowClosing(WindowEvent e) {
+            		System.exit(0);
+            	    }
+            	};
+            	JFrame f = new JFrame("Report");
+            	f.addWindowListener(l); 
+            	f.getContentPane().add(new JScrollPane(textArea), BorderLayout.CENTER);
+            	f.setSize(640, 480);
+            	f.setVisible(true);*/
+                
 	}
 
 	/**
@@ -353,6 +409,8 @@ int counter=0;
 			System.exit(0);
 		} else if (s.equals("Display")) {
 			showContents();
+		}else if (s.equals("Report")) {
+				showReports();
 		} else if (s.equals("About")) {
 			showCredits();
 		}
@@ -385,20 +443,23 @@ int counter=0;
 
 	public static void gameOver() {
         panelBoardNumbers.setVisible(false);
-		frameWin = new JFrame("Result!!");
+		frameWin = new JFrame("Result !!");
 		frameWin.setBounds(300, 300, 220, 120);
 		JPanel winPanel = new JPanel(new BorderLayout());
 		winPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
 		JLabel winLabel;
 		if (board.winner == 1) {
-			winLabel = new JLabel("Red Player wins!");
+			winLabel = new JLabel("Red Player wins !!");
+			System.out.println("Red Player wins !!");
 			winPanel.add(winLabel);
 		} else if (board.winner == 2) {
-			winLabel = new JLabel("Green Player wins!");
+			winLabel = new JLabel("Green Player wins !!");
 			winPanel.add(winLabel);
+			System.out.println("Green Player wins !!");
 		} else {
 			winLabel = new JLabel("Nobody Win! - You both loose!");
 			winPanel.add(winLabel);
+			System.out.println("Nobody Win! - You both loose!");
 		}
 		winPanel.add(winLabel, BorderLayout.NORTH);
 		JButton okButton = new JButton("Ok");
@@ -455,13 +516,38 @@ int counter=0;
 		frameCredits.setVisible(true);
 
 	}
-
+	private static void showReports() {
+		JFrame f = new JFrame("Reports");
+		 JTextArea textArea = new JTextArea();
+     	Document doc = textArea.getDocument();
+     	PrintStream out = new PrintStream(new DocumentOutputStream(doc));
+         out.println("Current Board View");
+         out.println(board);
+         WindowListener l = new WindowAdapter() {
+     	    public void windowClosing(WindowEvent e) {
+     	    	f.setVisible(false);
+     	    }
+     	};
+     
+     	f.addWindowListener(l); 
+     	f.getContentPane().add(new JScrollPane(textArea), BorderLayout.CENTER);
+     	f.setSize(640, 480);
+     	f.setVisible(true);
+	}
+	
 	public static void main(String[] args) {
 		try {
+			 /* try {
+					PrintStream out = new PrintStream(new FileOutputStream("C:/DELL/answer3.txt"));
+					System.setOut(out);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
 			UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
 		} catch (Exception e) { }
-
 		createNewGame();
+	    }
 	}
 
-}
+
