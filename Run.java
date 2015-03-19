@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 public class Run implements ActionListener, ItemListener {
 	// create objects
 	static int counter=0;
+	static String playerColor="None";
 	static SimpleBoard board = new SimpleBoard();
 	static JFrame frameMainWindow;
 	static JFrame frameWin;
@@ -33,7 +34,12 @@ public class Run implements ActionListener, ItemListener {
 
 	private static int p1TypeFlag = 0;
 	private static int p2TypeFlag = 0;
-
+	static JPanel statusPanel = new JPanel();
+	 static JLabel statusLabel1 = new JLabel("Moves so far :"+counter);
+	 static JLabel statusLabel2 = new JLabel("Last Player :"+playerColor);
+		
+	 static JLabel statusLabel3 = new JLabel("   ( Red First )   ");
+	 static JLabel statusLabel4 = new JLabel("                                         Scores 0-0");
 	public JMenuBar createMenuBar() {
 		JMenuBar menuBar;
 		JMenu menu, submenu, subsubmenu;
@@ -139,11 +145,11 @@ public class Run implements ActionListener, ItemListener {
 		
 		if(color.equals("red"))
 		{
-			System.out.println("Last Move : Red");
+			System.out.println("Last Move : Red(1)");
 			return "red";
 		}
 		else if(color.equals("green")){
-			System.out.println("Last Move : Green");
+			System.out.println("Last Move : Green(2)");
 			return "green";
 		}
 		else
@@ -193,23 +199,28 @@ return null;
 			panelBoardNumbers.setVisible(false);
 			panelBoardNumbers.repaint();
 		}
-		JPanel statusPanel = new JPanel();
 		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
 		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
-		JLabel statusLabel = new JLabel("Last Player :");
-		JLabel statusLabel1 = new JLabel("Moves so far :");
-		JLabel statusLabel3 = new JLabel("   ( Red First )");
-		JLabel statusLabel2 = new JLabel("                                         Scores 0-0");
-		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		createStatusPanel();
+		//statusPanel.setPreferredSize(new Dimension(frameMainWindow.getWidth(), 16));
+	}
+
+	private static void createStatusPanel() {
+		
+		
+		/*statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		statusLabel1.setHorizontalAlignment(SwingConstants.LEFT);
-		statusLabel2.setHorizontalAlignment(SwingConstants.LEFT);
-		statusPanel.add(statusLabel);
+		statusLabel2.setHorizontalAlignment(SwingConstants.LEFT);*/
+		statusLabel1.setText("Moves so far :"+counter);
+		statusLabel2.setText("Last Player :"+playerColor);
+		//statusPanel.add(statusLabel);
+		//statusPanel.add(statusLabel2);
+		//statusPanel.add(statusLabel3);
 		statusPanel.add(statusLabel2);
 		statusPanel.add(statusLabel3);
-		statusPanel.add(Box.createHorizontalGlue());
+		//statusPanel.add(Box.createHorizontalGlue());
 		statusPanel.add(statusLabel1);
 		frameMainWindow.add(statusPanel, BorderLayout.SOUTH);
-		statusPanel.setPreferredSize(new Dimension(frameMainWindow.getWidth(), 16));
 	}
 
 	public static void paintRed(int row, int col) {
@@ -244,12 +255,14 @@ return null;
 			// paint red at [r][c]
 			paintRed(r, c);
 			playerColor("red");
+			playerColor="red";
 			System.out.println("Current Board View");
             System.out.println(board);counter=counter+1;
 		} else if (playerPos == 2) {
 			// paint green at [r][c]
 			paintBlack(r, c);
 			playerColor("green");
+			playerColor="green";
 			System.out.println("Current Board View");
             System.out.println(board);
             counter=counter+1;
@@ -258,6 +271,13 @@ return null;
 		System.out.println("(Red First)");
 		 System.out.println("Moves so Far::"+counter);
 		 System.out.println("***********************");
+		 createStatusPanel();
+		/* JPanel statusPanel = new JPanel();
+		 JLabel statusLabel1 = new JLabel("Moves so far :"+counter);
+	      statusPanel.add(new JLabel("Score (in the Applet):  "));
+	      statusPanel.add(statusLabel1);
+	  	frameMainWindow.add(statusPanel, BorderLayout.SOUTH);
+		statusPanel.setPreferredSize(new Dimension(frameMainWindow.getWidth(), 16));*/  
 		if (board.over() == true) {
 			gameOver();
 		}
@@ -407,6 +427,9 @@ return null;
 
 		if ( s.equals("NewGame") ) {
 			// create new game
+			playerColor="none";
+			counter=0;
+			createStatusPanel();
 			createNewGame();
 		} else if ( s.equals("QuitGame")) {
 			System.exit(0);
