@@ -257,7 +257,8 @@ return null;
 			playerColor("red");
 			playerColor="red";
 			System.out.println("Current Board View");
-            System.out.println(board);counter=counter+1;
+            System.out.println(board);
+            counter=counter+1;
 		} else if (playerPos == 2) {
 			// paint green at [r][c]
 			paintBlack(r, c);
@@ -278,9 +279,9 @@ return null;
 	      statusPanel.add(statusLabel1);
 	  	frameMainWindow.add(statusPanel, BorderLayout.SOUTH);
 		statusPanel.setPreferredSize(new Dimension(frameMainWindow.getWidth(), 16));*/  
-		if (board.over() == true) {
+		/*if (board.over() == true) {
 			gameOver();
-		}
+		}*/
 
 	}
 
@@ -474,11 +475,11 @@ return null;
 		JPanel winPanel = new JPanel(new BorderLayout());
 		winPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
 		JLabel winLabel;
-		if (board.winner == 1) {
+		if (board.winner == 3) {
 			winLabel = new JLabel("Red Player wins !!");
 			System.out.println("Red Player wins !!");
 			winPanel.add(winLabel);
-		} else if (board.winner == 2) {
+		} else if (board.winner == 4) {
 			winLabel = new JLabel("Green Player wins !!");
 			winPanel.add(winLabel);
 			System.out.println("Green Player wins !!");
