@@ -2,9 +2,9 @@
  * ConnectFour.java
  *
  * Created on December 5, 2003, 5:56 PM
- */
+ 
 
-/**
+*//**
  *
  * @author  Chen Zhang
  */
@@ -13,7 +13,7 @@ public class ConnectFour {
    private static Player  p1;
    private static Player  p2;
     
-    /** Creates a new instance of ConnectFour */
+   //** Creates a new instance of ConnectFour */
     public ConnectFour() {
         p1 = new HumanPlayer();
         p2 = new HumanPlayer();
@@ -47,7 +47,7 @@ public class ConnectFour {
         
         else if ((n == 2) || (n == 3)) {
         	System.out.println("level of the computer is Min Max Player");
-          /*  System.out.println("Please choose the level of the computer:");
+            System.out.println("Please choose the level of the computer:");
             System.out.println("    1. RandomPlayer");
             System.out.println("    2. DefensivePlayer");
             System.out.println("    3. AggressivePlayer");
@@ -60,7 +60,7 @@ public class ConnectFour {
                 s = br.readLine();
             }
             catch ( IOException ioe ) {
-            }*/
+            }
             int nn = 4;
             
             Player temp= null;            
@@ -73,7 +73,7 @@ public class ConnectFour {
            if (n==2) {p1 = new HumanPlayer();p2 = temp;}
             if (n==3) {p1 = temp;p2 = new HumanPlayer();}                
         }
-        /*else {
+        else {
             System.out.println("Please choose the level of the computer 1:");
             System.out.println("    1. RandomPlayer");
             System.out.println("    2. DefensivePlayer");
@@ -91,9 +91,9 @@ public class ConnectFour {
            
             int nn = 4;
             
-            if (nn==1) p1 = new RandomPlayer();
+           /* if (nn==1) p1 = new RandomPlayer();
             if (nn==2) p1 = new DefensivePlayer();
-            if (nn==3) p1 = new AggressivePlayer();
+            if (nn==3) p1 = new AggressivePlayer();*/
             if (nn==4) p1 = new MinMaxPlayer();
             
             System.out.println("Please choose the level of the computer 2:");
@@ -111,12 +111,12 @@ public class ConnectFour {
             catch ( IOException ioe ) {
             }
             nn = 4;
-            if (nn==1) p2 = new RandomPlayer();
+       /*     if (nn==1) p2 = new RandomPlayer();
             if (nn==2) p2 = new DefensivePlayer();
-            if (nn==3) p2 = new AggressivePlayer();
+            if (nn==3) p2 = new AggressivePlayer();*/
             if (nn==4) p2 = new MinMaxPlayer();
             
-        }*/
+        }
         
         SimpleBoard BoardA = new SimpleBoard();
         
