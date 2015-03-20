@@ -71,11 +71,22 @@ public class Run implements ActionListener, ItemListener {
 		// Submenu one
 		submenu = new JMenu("Red Player");
 			ButtonGroup groupPlayers1 = new ButtonGroup();
+			
 			rbMenuItem = new JRadioButtonMenuItem("Human");
 			if (p1.getType() == 0) rbMenuItem.setSelected(true);
 			rbMenuItem.setName("P1Human");
 			rbMenuItem.addItemListener(this);
 			groupPlayers1.add(rbMenuItem);
+			
+			submenu.add(rbMenuItem);
+			rbMenuItem = new JRadioButtonMenuItem("Computer");
+			if (p1.getType() == 4) rbMenuItem.setSelected(true);
+			rbMenuItem.setName("P1MinMax");
+			rbMenuItem.addItemListener(this);
+			groupPlayers1.add(rbMenuItem);
+			submenu.add(rbMenuItem);
+			menu.add(submenu);
+/*			
 			submenu.add(rbMenuItem);
 			subsubmenu = new JMenu("Computer");
 				rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
@@ -85,18 +96,21 @@ public class Run implements ActionListener, ItemListener {
 				groupPlayers1.add(rbMenuItem);
 				subsubmenu.add(rbMenuItem);
 			submenu.add(subsubmenu);
-		menu.add(submenu);
+		menu.add(submenu);*/
+			
 		// submenu 2
 		submenu = new JMenu("Green Player");
 			ButtonGroup groupPlayers2 = new ButtonGroup();
-			subsubmenu = new JMenu("Computer");
-				rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
+//			subsubmenu = new JMenu("Computer");
+				rbMenuItem = new JRadioButtonMenuItem("Computer");
 				if (p2.getType() == 4) rbMenuItem.setSelected(true);
 				rbMenuItem.setName("P2MinMax");
 				rbMenuItem.addItemListener(this);
 				groupPlayers2.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);
-			submenu.add(subsubmenu);
+				submenu.add(rbMenuItem);
+				menu.add(submenu);
+//				subsubmenu.add(rbMenuItem);
+//			submenu.add(subsubmenu);
 			rbMenuItem = new JRadioButtonMenuItem("Human");
 			if (p1.getType() == 0) rbMenuItem.setSelected(true);
 			rbMenuItem.setName("P2Human");
