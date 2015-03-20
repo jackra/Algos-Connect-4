@@ -16,15 +16,10 @@ public class SimpleBoard{
     public int m_x=0;
     public int m_y=0;
     public int winner = 0;
-<<<<<<< HEAD
+
     public int player1 = 0;
     public int player2 = 0;
-=======
-    public int win = 0;
-    int player1_Scores = 0;
-    int player2_Scores = 0;
-    
->>>>>>> 1ba8dc84805b219a30b042effe7ce2b3240d9449
+
     public boolean out = true;
     public String movelist;
     Run ru=new Run();
@@ -141,7 +136,7 @@ public class SimpleBoard{
             (line_rd.matches(match)) )
             {
               winner = 3 - next_player;
-<<<<<<< HEAD
+
              /* if (out){
               System.out.print("\nPlayer ");
               System.out.print(new Integer(winner));
@@ -161,31 +156,7 @@ public class SimpleBoard{
             } 
         
         System.out.println("Red player "+player1+""+"Green player "+player2);
-=======
-//              if (out){
-//              System.out.print("\nPlayer ");
-//              System.out.print(new Integer(winner));
-//              System.out.println(" won!");
-//              }
-              
-          	if (winner == 1){
-          		player1_Scores = (player1_Scores + 1);
-          	}else if (winner == 2){
-          		player2_Scores = player2_Scores + 1;
-          	}
-          	
-           if(player1_Scores > player2_Scores)
-        	   win = 1;
-           else if(player2_Scores > player1_Scores)
-        	   win =2;
-           	
-           	
-//
-//              return true;
-            } 
-        System.out.println("Player1 "+player1_Scores+ "  " + "Player2 "+player2_Scores );
-       
->>>>>>> 1ba8dc84805b219a30b042effe7ce2b3240d9449
+
         
         int z=0;
         for (int i=0; i<6; i++)

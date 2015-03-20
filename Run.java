@@ -146,7 +146,7 @@ public class Run implements ActionListener, ItemListener {
 		layeredGameBoard = new JLayeredPane();
 		layeredGameBoard.setPreferredSize(new Dimension(570, 490));
 		layeredGameBoard.setBorder(BorderFactory.createTitledBorder("Max Connect 4 Game"));
-		ImageIcon imageBoard = new ImageIcon("images/Board.gif");
+		ImageIcon imageBoard = new ImageIcon("images/Board.jpg");
 		JLabel imageBoardLabel = new JLabel(imageBoard);
 
 		imageBoardLabel.setBounds(20, 20, imageBoard.getIconWidth(), imageBoard.getIconHeight());
@@ -240,7 +240,7 @@ return null;
 	public static void paintRed(int row, int col) {
 		int xOffset = 75 * col;
 		int yOffset = 75 * row;
-		ImageIcon redIcon = new ImageIcon("images/Red.gif");
+		ImageIcon redIcon = new ImageIcon("images/Red.jpg");
 		JLabel redIconLabel = new JLabel(redIcon);
 		redIconLabel.setBounds(27 + xOffset, 27 + yOffset, redIcon.getIconWidth(),redIcon.getIconHeight());
 		layeredGameBoard.add(redIconLabel, new Integer(0), 0);
@@ -251,7 +251,7 @@ return null;
 	public static void paintBlack(int row, int col) {
 		int xOffset = 75 * col;
 		int yOffset = 75 * row;
-		ImageIcon blackIcon = new ImageIcon("images/Black.gif");
+		ImageIcon blackIcon = new ImageIcon("images/green.jpg");
 		JLabel blackIconLabel = new JLabel(blackIcon);
 		blackIconLabel.setBounds(27 + xOffset, 27 + yOffset, blackIcon.getIconWidth(),blackIcon.getIconHeight());
 		layeredGameBoard.add(blackIconLabel, new Integer(0), 0);
@@ -558,7 +558,7 @@ return null;
 
 	}
 	private static void showReports() {
-		JFrame f = new JFrame("Reports");
+		final JFrame f = new JFrame("Reports");
 		 JTextArea textArea = new JTextArea();
      	Document doc = textArea.getDocument();
      	PrintStream out = new PrintStream(new DocumentOutputStream(doc));
@@ -578,13 +578,13 @@ return null;
 	
 	public static void main(String[] args) {
 		try {
-			 /* try {
-					PrintStream out = new PrintStream(new FileOutputStream("C:/DELL/answer3.txt"));
+			 try {
+					PrintStream out = new PrintStream(new FileOutputStream("/Users/rohan/Documents/answer3.txt"));
 					System.setOut(out);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}*/
+				}
 			UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
 		} catch (Exception e) { }
 		createNewGame();
