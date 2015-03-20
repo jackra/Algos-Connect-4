@@ -36,28 +36,35 @@ public class SimpleBoard{
     
     public void ParseMove(String move_list){
         for (int i=0;i<move_list.length();i++) {
-           int tm = Integer.parseInt((new Character(move_list.charAt(i))).toString());
+          // int tm = Integer.parseInt((new Character(move_list.charAt(i))).toString());
+          int tm= (int) (Math.random()*7);
            Move(tm);
         }
         
     }
     public void Move(int pos) {
-    	
+    	try{
         if ( (pos<0) || (pos >6))
             System.out.println("invalid input\n\n");
         else{
             if ((cols[pos]==6)&& out ){
-                System.out.println("Column full");}
+              //  System.out.println("Column full");
+                boolean out=false;}
             else{
             m_y=pos;
             movelist+=(new Integer(pos)).toString();
             m_x= 5-cols[pos];
             cols[pos]++; 
             loc[m_x][m_y] = next_player;
-            System.out.println("test"+next_player);
+           // System.out.println("test"+next_player);
             next_player = 3-next_player;
             }
-        }
+        }}
+    	catch(Exception e)
+    	{
+    	//	ru.game();
+    		System.out.println("error");
+    	}
     	
     
         
@@ -134,10 +141,8 @@ public class SimpleBoard{
             (line_rd.matches(match)) )
             {
               winner = 3 - next_player;
-             /* if (out){
-              System.out.print("\nPlayer ");
-              System.out.print(new Integer(winner));
-              System.out.println(" won!");}*/
+             // if (out){
+            	//  System.out.println("Red playerx "+player1+""+" Green player "+player2);}
 
               
               if(winner==1)
@@ -148,22 +153,26 @@ public class SimpleBoard{
               {
             	  player2=player2+1;
               }
-              System.out.println("Red playerx "+player1+""+" Green player "+player2);
+            //  System.out.println("Red playerx "+player1+""+" Green player "+player2);
               
-             return true;
+            // return true;
             } 
         
        
         
         int z=0;
         for (int i=0; i<6; i++)
+        {
             for (int j=0; j<7; j++)
-              if (loc[i][j] == 0)  z = 1;
+            {     if (loc[i][j] == 0)  {z = 1;}}
+        
+        }
             
         if (z == 0)
         {
-
-        	ru.gameOver();
+        	System.out.println("x---------------------"+loc[5][0]);
+        	//ru.gameOver();
+        	//System.out.println("Red playerx "+player1+""+" Green player "+player2);
             return true;
         }
       

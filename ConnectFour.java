@@ -12,7 +12,7 @@ import java.io.*;
 public class ConnectFour {
    private static Player  p1;
    private static Player  p2;
-    
+    static Run ru=new Run();
    //** Creates a new instance of ConnectFour */
     public ConnectFour() {
         p1 = new HumanPlayer();
@@ -134,6 +134,10 @@ public class ConnectFour {
                        
         }
         System.out.println(BoardA);
+/*        while(BoardA.over())
+        {
+        	//ru.gameOver();
+        }*/
     }
     
 }
