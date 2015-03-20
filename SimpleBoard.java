@@ -16,10 +16,8 @@ public class SimpleBoard{
     public int m_x=0;
     public int m_y=0;
     public int winner = 0;
-
     public int player1 = 0;
     public int player2 = 0;
-
     public boolean out = true;
     public String movelist;
     Run ru=new Run();
@@ -29,6 +27,8 @@ public class SimpleBoard{
        loc = new int[6][7];
        cols = new int[7];
        winner=0;
+       player1=0;
+       player2=0;
        clear();
        movelist="";
        out = true;
@@ -59,7 +59,8 @@ public class SimpleBoard{
         }}
     	catch(ArrayIndexOutOfBoundsException e)
     	{
-    		System.out.println("Please Check the input entered"+e);
+    		ru.errorColumn();
+    		System.out.println("Please Check the input entered");
     	}
         
     }
@@ -81,7 +82,6 @@ public class SimpleBoard{
     
     public int next() {return next_player;}
     public int[] ret_col(){return cols;}
-    
     public boolean over() {
         String line_x="";
         String line_y="";
@@ -136,27 +136,25 @@ public class SimpleBoard{
             (line_rd.matches(match)) )
             {
               winner = 3 - next_player;
-
              /* if (out){
               System.out.print("\nPlayer ");
               System.out.print(new Integer(winner));
               System.out.println(" won!");}*/
 
-             // return true;}
+              
               if(winner==1)
               {
             	  player1=player1+1;
-            	  getScores(player1,player2);
               }
               if(winner==2)
               {
             	  player2=player2+1;
-            	  getScores(player1,player2);
               }
+              System.out.println("Red playerx "+player1+""+" Green player "+player2);
+              return true;
             } 
         
-        System.out.println("Red player "+player1+""+"Green player "+player2);
-
+       
         
         int z=0;
         for (int i=0; i<6; i++)
@@ -165,6 +163,8 @@ public class SimpleBoard{
             
         if (z == 0)
         {
+        	System.out.println("player1"+player1);
+        	System.out.println("player2"+player2);
         	if(player1>player2)
         	{
         		winner=3;
@@ -182,16 +182,15 @@ public class SimpleBoard{
         	ru.gameOver();
             return true;
         }
-            
+      
         return false;
     }
     
     
     
-    private int getScores(int player1, int player2) {
-		return player1;
-		
-	}
+   
+
+	
 
 	public String toString(){
         String ret = "   0 1 2 3 4 5 6\n";

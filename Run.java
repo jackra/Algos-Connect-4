@@ -24,6 +24,7 @@ public class Run implements ActionListener, ItemListener {
 	static SimpleBoard board = new SimpleBoard();
 	static JFrame frameMainWindow;
 	static JFrame frameWin;
+	static JFrame frameErr;
 	static JFrame frameCredits;
 
 	static JPanel panelBoardNumbers;
@@ -31,7 +32,8 @@ public class Run implements ActionListener, ItemListener {
 
 	private static Player p1 = new HumanPlayer();
 	private static Player p2 = new HumanPlayer();
-
+	private static int p1score = 0;
+	private static int p2score = 0;
 	private static int p1TypeFlag = 0;
 	private static int p2TypeFlag = 0;
 	static JPanel statusPanel = new JPanel();
@@ -39,108 +41,108 @@ public class Run implements ActionListener, ItemListener {
 	 static JLabel statusLabel2 = new JLabel("Last Player :"+playerColor);
 		
 	 static JLabel statusLabel3 = new JLabel("   ( Red First )   ");
-	 static JLabel statusLabel4 = new JLabel("                                         Scores 0-0");
-	public JMenuBar createMenuBar() {
-		JMenuBar menuBar;
-		JMenu menu, submenu, subsubmenu;
-		JMenuItem menuItem;
-		JRadioButtonMenuItem rbMenuItem;
-	//	int[][] boardView;
+	 static JLabel statusLabel4 = new JLabel("          Scores"+p1score+"-"+p2score);
+	 public JMenuBar createMenuBar() {
+			JMenuBar menuBar;
+			JMenu menu, submenu, subsubmenu;
+			JMenuItem menuItem;
+			JRadioButtonMenuItem rbMenuItem;
+		//	int[][] boardView;
 
-		// create and build first menu
-		menuBar = new JMenuBar();
-		menu = new JMenu("File");
-		menu.setMnemonic(KeyEvent.VK_F);
-		menuBar.add(menu);
-		// add items to menu
-		menuItem = new JMenuItem("New game", KeyEvent.VK_N);
-		menuItem.setName("NewGame");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-		menu.addSeparator();
-		menuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
-		menuItem.setName("QuitGame");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
+			// create and build first menu
+			menuBar = new JMenuBar();
+			menu = new JMenu("File");
+			menu.setMnemonic(KeyEvent.VK_F);
+			menuBar.add(menu);
+			// add items to menu
+			menuItem = new JMenuItem("New game", KeyEvent.VK_N);
+			menuItem.setName("NewGame");
+			menuItem.addActionListener(this);
+			menu.add(menuItem);
+			menu.addSeparator();
+			menuItem = new JMenuItem("Quit", KeyEvent.VK_Q);
+			menuItem.setName("QuitGame");
+			menuItem.addActionListener(this);
+			menu.add(menuItem);
 
-		// create and build second menu
-		menu = new JMenu("Players");
-		menu.setMnemonic(KeyEvent.VK_P);
-		menuBar.add(menu);
-		// add items to menu
-		// Submenu one
-		submenu = new JMenu("Red Player");
-			ButtonGroup groupPlayers1 = new ButtonGroup();
-			
-			rbMenuItem = new JRadioButtonMenuItem("Human");
-			if (p1.getType() == 0) rbMenuItem.setSelected(true);
-			rbMenuItem.setName("P1Human");
-			rbMenuItem.addItemListener(this);
-			groupPlayers1.add(rbMenuItem);
-			
-			submenu.add(rbMenuItem);
-			rbMenuItem = new JRadioButtonMenuItem("Computer");
-			if (p1.getType() == 4) rbMenuItem.setSelected(true);
-			rbMenuItem.setName("P1MinMax");
-			rbMenuItem.addItemListener(this);
-			groupPlayers1.add(rbMenuItem);
-			submenu.add(rbMenuItem);
-			menu.add(submenu);
-/*			
-			submenu.add(rbMenuItem);
-			subsubmenu = new JMenu("Computer");
-				rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
+			// create and build second menu
+			menu = new JMenu("Players");
+			menu.setMnemonic(KeyEvent.VK_P);
+			menuBar.add(menu);
+			// add items to menu
+			// Submenu one
+			submenu = new JMenu("Red Player");
+				ButtonGroup groupPlayers1 = new ButtonGroup();
+				
+				rbMenuItem = new JRadioButtonMenuItem("Human");
+				if (p1.getType() == 0) rbMenuItem.setSelected(true);
+				rbMenuItem.setName("P1Human");
+				rbMenuItem.addItemListener(this);
+				groupPlayers1.add(rbMenuItem);
+				
+				submenu.add(rbMenuItem);
+				rbMenuItem = new JRadioButtonMenuItem("Computer");
 				if (p1.getType() == 4) rbMenuItem.setSelected(true);
 				rbMenuItem.setName("P1MinMax");
 				rbMenuItem.addItemListener(this);
 				groupPlayers1.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);
-			submenu.add(subsubmenu);
-		menu.add(submenu);*/
-			
-		// submenu 2
-		submenu = new JMenu("Green Player");
-			ButtonGroup groupPlayers2 = new ButtonGroup();
-//			subsubmenu = new JMenu("Computer");
-				rbMenuItem = new JRadioButtonMenuItem("Computer");
-				if (p2.getType() == 4) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P2MinMax");
-				rbMenuItem.addItemListener(this);
-				groupPlayers2.add(rbMenuItem);
 				submenu.add(rbMenuItem);
 				menu.add(submenu);
-//				subsubmenu.add(rbMenuItem);
-//			submenu.add(subsubmenu);
-			rbMenuItem = new JRadioButtonMenuItem("Human");
-			if (p1.getType() == 0) rbMenuItem.setSelected(true);
-			rbMenuItem.setName("P2Human");
-			rbMenuItem.setSelected(true);
-			rbMenuItem.setMnemonic(KeyEvent.VK_H);
-			groupPlayers2.add(rbMenuItem);
-			rbMenuItem.addItemListener(this);
-			submenu.add(rbMenuItem);
-		menu.add(submenu);
-		menuBar.add(Box.createHorizontalGlue());
-		// create Help menu
-		menu = new JMenu("Help");
-		menuBar.add(menu);
-		// add items to menu
-		menuItem = new JMenuItem("Display");
-		menuItem.setName("Display");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-		menu.addSeparator();
-		menuItem = new JMenuItem("Report");
-		menuItem.setName("Report");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-		menu.addSeparator();
-		menuItem = new JMenuItem("About");
-		menuItem.setName("About");
-		menuItem.addActionListener(this);
-		menu.add(menuItem);
-		return menuBar;
-	}
+	/*			
+				submenu.add(rbMenuItem);
+				subsubmenu = new JMenu("Computer");
+					rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
+					if (p1.getType() == 4) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P1MinMax");
+					rbMenuItem.addItemListener(this);
+					groupPlayers1.add(rbMenuItem);
+					subsubmenu.add(rbMenuItem);
+				submenu.add(subsubmenu);
+			menu.add(submenu);*/
+				
+			// submenu 2
+			submenu = new JMenu("Green Player");
+				ButtonGroup groupPlayers2 = new ButtonGroup();
+//				subsubmenu = new JMenu("Computer");
+					rbMenuItem = new JRadioButtonMenuItem("Computer");
+					if (p2.getType() == 4) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P2MinMax");
+					rbMenuItem.addItemListener(this);
+					groupPlayers2.add(rbMenuItem);
+					submenu.add(rbMenuItem);
+					menu.add(submenu);
+//					subsubmenu.add(rbMenuItem);
+//				submenu.add(subsubmenu);
+				rbMenuItem = new JRadioButtonMenuItem("Human");
+				if (p1.getType() == 0) rbMenuItem.setSelected(true);
+				rbMenuItem.setName("P2Human");
+				rbMenuItem.setSelected(true);
+				rbMenuItem.setMnemonic(KeyEvent.VK_H);
+				groupPlayers2.add(rbMenuItem);
+				rbMenuItem.addItemListener(this);
+				submenu.add(rbMenuItem);
+			menu.add(submenu);
+			menuBar.add(Box.createHorizontalGlue());
+			// create Help menu
+			menu = new JMenu("Help");
+			menuBar.add(menu);
+			// add items to menu
+			menuItem = new JMenuItem("Display");
+			menuItem.setName("Display");
+			menuItem.addActionListener(this);
+			menu.add(menuItem);
+			menu.addSeparator();
+			menuItem = new JMenuItem("Report");
+			menuItem.setName("Report");
+			menuItem.addActionListener(this);
+			menu.add(menuItem);
+			menu.addSeparator();
+			menuItem = new JMenuItem("About");
+			menuItem.setName("About");
+			menuItem.addActionListener(this);
+			menu.add(menuItem);
+			return menuBar;
+		}
 
 	public static JLayeredPane createLayeredBoard() {
 		layeredGameBoard = new JLayeredPane();
@@ -225,12 +227,14 @@ return null;
 		/*statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		statusLabel1.setHorizontalAlignment(SwingConstants.LEFT);
 		statusLabel2.setHorizontalAlignment(SwingConstants.LEFT);*/
-		statusLabel1.setText("Moves so far :"+counter);
+		statusLabel1.setText("         Moves so far :"+counter);
 		statusLabel2.setText("Last Player :"+playerColor);
+		 statusLabel4.setText("        Scores"+p1score+"-"+p2score);
 		//statusPanel.add(statusLabel);
 		//statusPanel.add(statusLabel2);
 		//statusPanel.add(statusLabel3);
 		statusPanel.add(statusLabel2);
+		statusPanel.add(statusLabel4);
 		statusPanel.add(statusLabel3);
 		//statusPanel.add(Box.createHorizontalGlue());
 		statusPanel.add(statusLabel1);
@@ -251,7 +255,7 @@ return null;
 	public static void paintBlack(int row, int col) {
 		int xOffset = 75 * col;
 		int yOffset = 75 * row;
-		ImageIcon blackIcon = new ImageIcon("images/green.jpg");
+		ImageIcon blackIcon = new ImageIcon("images/Green.jpg");
 		JLabel blackIconLabel = new JLabel(blackIcon);
 		blackIconLabel.setBounds(27 + xOffset, 27 + yOffset, blackIcon.getIconWidth(),blackIcon.getIconHeight());
 		layeredGameBoard.add(blackIconLabel, new Integer(0), 0);
@@ -282,10 +286,11 @@ return null;
             System.out.println(board);
             counter=counter+1;
 		}
-		System.out.println("Score: 0-0");
 		System.out.println("(Red First)");
-		 System.out.println("Moves so Far::"+counter);
+		 System.out.println("         Moves so Far::"+counter);
 		 System.out.println("***********************");
+		 p1score=board.player1;
+		 p2score=board.player2;
 		 createStatusPanel();
 		/* JPanel statusPanel = new JPanel();
 		 JLabel statusLabel1 = new JLabel("Moves so far :"+counter);
@@ -305,7 +310,6 @@ return null;
 		if (board.next() == 1) p1.go(board);
 		else p2.go(board);
 		redrawBoard();
-                
                 if (!board.over()) {
 		int nextTypeFlag = 0;
 		if (board.next() == 1) nextTypeFlag = p1TypeFlag;
@@ -314,27 +318,16 @@ return null;
 			if (board.next() == 1) p1.go(board);
 			else p2.go(board);
 			redrawBoard();
-                        
                 }
-                
+               
         }
-              
+                p1score=board.player1;
+          		 p2score=board.player2;
+          		
+          		 createStatusPanel();
+          		 System.out.println("Red player "+p1score+""+" Green player "+p2score);  
                 
-               /* JTextArea textArea = new JTextArea();
-            	Document doc = textArea.getDocument();
-            	PrintStream out = new PrintStream(new DocumentOutputStream(doc));
-                out.println("Current Board View");
-                out.println(board);
-                WindowListener l = new WindowAdapter() {
-            	    public void windowClosing(WindowEvent e) {
-            		System.exit(0);
-            	    }
-            	};
-            	JFrame f = new JFrame("Report");
-            	f.addWindowListener(l); 
-            	f.getContentPane().add(new JScrollPane(textArea), BorderLayout.CENTER);
-            	f.setSize(640, 480);
-            	f.setVisible(true);*/
+
                 
 	}
 
@@ -444,6 +437,8 @@ return null;
 			// create new game
 			playerColor="none";
 			counter=0;
+			p1score=0;
+			p2score=0;
 			createStatusPanel();
 			createNewGame();
 		} else if ( s.equals("QuitGame")) {
@@ -513,7 +508,25 @@ return null;
 		frameWin.getContentPane().add(winPanel, BorderLayout.CENTER);
 		frameWin.setVisible(true);
 	}
-
+	public static void errorColumn() {
+		frameErr = new JFrame("Error !!");
+		frameErr.setBounds(300, 300, 220, 120);
+		JPanel winPanel = new JPanel(new BorderLayout());
+		winPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
+		JLabel winLabel;
+			winLabel = new JLabel("Move Invalid!!");
+			winPanel.add(winLabel);
+		winPanel.add(winLabel, BorderLayout.NORTH);
+		JButton okButton = new JButton("Ok");
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameErr.setVisible(false);
+			}
+		});
+		winPanel.add(okButton, BorderLayout.SOUTH);
+		frameErr.getContentPane().add(winPanel, BorderLayout.CENTER);
+		frameErr.setVisible(true);
+	}
 	public static void showCredits() {
 		frameCredits = new JFrame("Credits");
 		frameCredits.setBounds(300, 300, 480, 320);
@@ -558,7 +571,7 @@ return null;
 
 	}
 	private static void showReports() {
-		final JFrame f = new JFrame("Reports");
+		JFrame f = new JFrame("Reports");
 		 JTextArea textArea = new JTextArea();
      	Document doc = textArea.getDocument();
      	PrintStream out = new PrintStream(new DocumentOutputStream(doc));
@@ -578,13 +591,13 @@ return null;
 	
 	public static void main(String[] args) {
 		try {
-			 try {
-					PrintStream out = new PrintStream(new FileOutputStream("/Users/rohan/Documents/answer3.txt"));
+			 /* try {
+					PrintStream out = new PrintStream(new FileOutputStream("C:/DELL/answer3.txt"));
 					System.setOut(out);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 			UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
 		} catch (Exception e) { }
 		createNewGame();
