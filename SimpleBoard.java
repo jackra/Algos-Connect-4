@@ -16,9 +16,11 @@ public class SimpleBoard{
     public int m_x=0;
     public int m_y=0;
     public int winner = 0;
+    public int player1 = 0;
+    public int player2 = 0;
     public boolean out = true;
     public String movelist;
-    
+    Run ru=new Run();
     /** Creates a new instance of SimpleBoard */
     public SimpleBoard(){
        next_player = 1;
@@ -131,14 +133,25 @@ public class SimpleBoard{
             (line_rd.matches(match)) )
             {
               winner = 3 - next_player;
-              if (out){
+             /* if (out){
               System.out.print("\nPlayer ");
               System.out.print(new Integer(winner));
-              System.out.println(" won!");}
+              System.out.println(" won!");}*/
 
-              return true;
+             // return true;}
+              if(winner==1)
+              {
+            	  player1=player1+1;
+            	  getScores(player1,player2);
+              }
+              if(winner==2)
+              {
+            	  player2=player2+1;
+            	  getScores(player1,player2);
+              }
             } 
         
+        System.out.println("Red player "+player1+""+"Green player "+player2);
         
         int z=0;
         for (int i=0; i<6; i++)
@@ -147,8 +160,21 @@ public class SimpleBoard{
             
         if (z == 0)
         {
-            if (out)
-                System.out.println("Draw!");
+        	if(player1>player2)
+        	{
+        		winner=3;
+        		System.out.println("Red player wins");
+        	}
+        	else if(player2>player1)
+        	{
+        		winner=4;
+        		System.out.println("Green player wins");
+        	}
+        	else
+        	{
+        		System.out.println("Draw!");
+        	}
+        	ru.gameOver();
             return true;
         }
             
@@ -157,7 +183,12 @@ public class SimpleBoard{
     
     
     
-    public String toString(){
+    private int getScores(int player1, int player2) {
+		return player1;
+		
+	}
+
+	public String toString(){
         String ret = "   0 1 2 3 4 5 6\n";
         for (int i = 0; i < 6; i++){
             ret += (new Integer(i)).toString()+ ": ";
