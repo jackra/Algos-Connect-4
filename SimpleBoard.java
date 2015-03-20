@@ -42,26 +42,24 @@ public class SimpleBoard{
         
     }
     public void Move(int pos) {
-    	try{
+    	
         if ( (pos<0) || (pos >6))
             System.out.println("invalid input\n\n");
         else{
-            if ((cols[pos]==6) && out)
-                System.out.println("Column full");
+            if ((cols[pos]==6)&& out ){
+                System.out.println("Column full");}
             else{
             m_y=pos;
             movelist+=(new Integer(pos)).toString();
             m_x= 5-cols[pos];
             cols[pos]++; 
             loc[m_x][m_y] = next_player;
+            System.out.println("test"+next_player);
             next_player = 3-next_player;
             }
-        }}
-    	catch(ArrayIndexOutOfBoundsException e)
-    	{
-    		ru.errorColumn();
-    		System.out.println("Please Check the input entered");
-    	}
+        }
+    	
+    
         
     }
     
@@ -151,7 +149,8 @@ public class SimpleBoard{
             	  player2=player2+1;
               }
               System.out.println("Red playerx "+player1+""+" Green player "+player2);
-              return true;
+              
+             return true;
             } 
         
        
@@ -163,22 +162,7 @@ public class SimpleBoard{
             
         if (z == 0)
         {
-        	System.out.println("player1"+player1);
-        	System.out.println("player2"+player2);
-        	if(player1>player2)
-        	{
-        		winner=3;
-        		System.out.println("Red player wins");
-        	}
-        	else if(player2>player1)
-        	{
-        		winner=4;
-        		System.out.println("Green player wins");
-        	}
-        	else
-        	{
-        		System.out.println("Draw!");
-        	}
+
         	ru.gameOver();
             return true;
         }

@@ -26,7 +26,8 @@ public class Run implements ActionListener, ItemListener {
 	static JFrame frameWin;
 	static JFrame frameErr;
 	static JFrame frameCredits;
-
+static int red=0;
+static int green=0;
 	static JPanel panelBoardNumbers;
 	static JLayeredPane layeredGameBoard;
 
@@ -47,7 +48,7 @@ public class Run implements ActionListener, ItemListener {
 			JMenu menu, submenu, subsubmenu;
 			JMenuItem menuItem;
 			JRadioButtonMenuItem rbMenuItem;
-		//	int[][] boardView;
+			int[][] boardView;
 
 			// create and build first menu
 			menuBar = new JMenuBar();
@@ -71,26 +72,33 @@ public class Run implements ActionListener, ItemListener {
 			menuBar.add(menu);
 			// add items to menu
 			// Submenu one
-			submenu = new JMenu("Red Player");
+			submenu = new JMenu("Player 1");
 				ButtonGroup groupPlayers1 = new ButtonGroup();
-				
 				rbMenuItem = new JRadioButtonMenuItem("Human");
 				if (p1.getType() == 0) rbMenuItem.setSelected(true);
 				rbMenuItem.setName("P1Human");
 				rbMenuItem.addItemListener(this);
 				groupPlayers1.add(rbMenuItem);
-				
-				submenu.add(rbMenuItem);
-				rbMenuItem = new JRadioButtonMenuItem("Computer");
-				if (p1.getType() == 4) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P1MinMax");
-				rbMenuItem.addItemListener(this);
-				groupPlayers1.add(rbMenuItem);
-				submenu.add(rbMenuItem);
-				menu.add(submenu);
-	/*			
 				submenu.add(rbMenuItem);
 				subsubmenu = new JMenu("Computer");
+					rbMenuItem = new JRadioButtonMenuItem("Random Player");
+					if (p1.getType() == 1) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P1Random");
+					rbMenuItem.addItemListener(this);
+					groupPlayers1.add(rbMenuItem);
+					subsubmenu.add(rbMenuItem);
+					/*rbMenuItem = new JRadioButtonMenuItem("Defensive Player");
+					if (p1.getType() == 2) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P1Defensive");
+					rbMenuItem.addItemListener(this);
+					groupPlayers1.add(rbMenuItem);
+					subsubmenu.add(rbMenuItem);
+					rbMenuItem = new JRadioButtonMenuItem("Aggressive Player");
+					if (p1.getType() == 3) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P1Aggressive");
+					rbMenuItem.addItemListener(this);
+					groupPlayers1.add(rbMenuItem);
+					subsubmenu.add(rbMenuItem);*/
 					rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
 					if (p1.getType() == 4) rbMenuItem.setSelected(true);
 					rbMenuItem.setName("P1MinMax");
@@ -98,21 +106,36 @@ public class Run implements ActionListener, ItemListener {
 					groupPlayers1.add(rbMenuItem);
 					subsubmenu.add(rbMenuItem);
 				submenu.add(subsubmenu);
-			menu.add(submenu);*/
-				
+			menu.add(submenu);
 			// submenu 2
-			submenu = new JMenu("Green Player");
+			submenu = new JMenu("Player 2");
 				ButtonGroup groupPlayers2 = new ButtonGroup();
-//				subsubmenu = new JMenu("Computer");
-					rbMenuItem = new JRadioButtonMenuItem("Computer");
+				subsubmenu = new JMenu("Computer");
+					rbMenuItem = new JRadioButtonMenuItem("Random Player");
+					if (p2.getType() == 1) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P2Random");
+					rbMenuItem.addItemListener(this);
+					groupPlayers2.add(rbMenuItem);
+					subsubmenu.add(rbMenuItem);
+					/*rbMenuItem = new JRadioButtonMenuItem("Defensive Player");
+					if (p2.getType() == 2) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P2Defensive");
+					rbMenuItem.addItemListener(this);
+					groupPlayers2.add(rbMenuItem);
+					subsubmenu.add(rbMenuItem);
+					rbMenuItem = new JRadioButtonMenuItem("Aggressive Player");
+					if (p2.getType() == 3) rbMenuItem.setSelected(true);
+					rbMenuItem.setName("P2Aggressive");
+					rbMenuItem.addItemListener(this);
+					groupPlayers2.add(rbMenuItem);
+					subsubmenu.add(rbMenuItem);*/
+					rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
 					if (p2.getType() == 4) rbMenuItem.setSelected(true);
 					rbMenuItem.setName("P2MinMax");
 					rbMenuItem.addItemListener(this);
 					groupPlayers2.add(rbMenuItem);
-					submenu.add(rbMenuItem);
-					menu.add(submenu);
-//					subsubmenu.add(rbMenuItem);
-//				submenu.add(subsubmenu);
+					subsubmenu.add(rbMenuItem);
+				submenu.add(subsubmenu);
 				rbMenuItem = new JRadioButtonMenuItem("Human");
 				if (p1.getType() == 0) rbMenuItem.setSelected(true);
 				rbMenuItem.setName("P2Human");
@@ -122,7 +145,7 @@ public class Run implements ActionListener, ItemListener {
 				rbMenuItem.addItemListener(this);
 				submenu.add(rbMenuItem);
 			menu.add(submenu);
-			menuBar.add(Box.createHorizontalGlue());
+
 			// create Help menu
 			menu = new JMenu("Help");
 			menuBar.add(menu);
@@ -136,6 +159,8 @@ public class Run implements ActionListener, ItemListener {
 			menuItem.setName("Report");
 			menuItem.addActionListener(this);
 			menu.add(menuItem);
+			
+		//	menu.add(Box.createHorizontalGlue());
 			menu.addSeparator();
 			menuItem = new JMenuItem("About");
 			menuItem.setName("About");
@@ -143,7 +168,6 @@ public class Run implements ActionListener, ItemListener {
 			menu.add(menuItem);
 			return menuBar;
 		}
-
 	public static JLayeredPane createLayeredBoard() {
 		layeredGameBoard = new JLayeredPane();
 		layeredGameBoard.setPreferredSize(new Dimension(570, 490));
@@ -289,18 +313,11 @@ return null;
 		System.out.println("(Red First)");
 		 System.out.println("         Moves so Far::"+counter);
 		 System.out.println("***********************");
-		 p1score=board.player1;
-		 p2score=board.player2;
+		
 		 createStatusPanel();
-		/* JPanel statusPanel = new JPanel();
-		 JLabel statusLabel1 = new JLabel("Moves so far :"+counter);
-	      statusPanel.add(new JLabel("Score (in the Applet):  "));
-	      statusPanel.add(statusLabel1);
-	  	frameMainWindow.add(statusPanel, BorderLayout.SOUTH);
-		statusPanel.setPreferredSize(new Dimension(frameMainWindow.getWidth(), 16));*/  
-		/*if (board.over() == true) {
-			gameOver();
-		}*/
+		if (board.over() == true) {
+			gameOver1();
+		}
 
 	}
 
@@ -321,11 +338,9 @@ return null;
                 }
                
         }
-                p1score=board.player1;
-          		 p2score=board.player2;
           		
           		 createStatusPanel();
-          		 System.out.println("Red player "+p1score+""+" Green player "+p2score);  
+          		
                 
 
                 
@@ -439,6 +454,8 @@ return null;
 			counter=0;
 			p1score=0;
 			p2score=0;
+			red=0;
+			green=0;
 			createStatusPanel();
 			createNewGame();
 		} else if ( s.equals("QuitGame")) {
@@ -453,28 +470,63 @@ return null;
 
 	}
 
-
 	public void itemStateChanged(ItemEvent e) {
 		JMenuItem source = (JMenuItem)(e.getSource());
 		String s = source.getName() +
 				   ((e.getStateChange() == ItemEvent.SELECTED) ?
 					 "-selected":"-unselected");
 
-		
-			if (s.equals("P1Human-selected")) {
+		if (s.equals("P1Random-selected")) {
+			p1 = new RandomPlayer();
+			p1TypeFlag = 1;
+		} else if (s.equals("P1Human-selected")) {
 			p1 = new HumanPlayer();
 			p1TypeFlag = 0;
+		} else if (s.equals("P1Defensive-selected")) {
+			p1 = new DefensivePlayer();
+			p1TypeFlag = 1;
+		} else if (s.equals("P1Aggressive-selected")) {
+			p1 = new AggressivePlayer();
+			p1TypeFlag = 1;
 		} else if (s.equals("P1MinMax-selected")) {
 			p1 = new MinMaxPlayer();
 			p1TypeFlag = 1;
 		} else if (s.equals("P2Human-selected")) {
 			p2 = new HumanPlayer();
 			p2TypeFlag = 0;
+		} else if (s.equals("P2Random-selected")) {
+			p2 = new RandomPlayer();
+			p2TypeFlag = 1;
+		} else if (s.equals("P2Defensive-selected")) {
+			p2 = new DefensivePlayer();
+			p2TypeFlag = 1;
+		} else if (s.equals("P2Aggressive-selected")) {
+			p2 = new AggressivePlayer();
+			p2TypeFlag = 1;
 		} else if (s.equals("P2MinMax-selected")) {
 			p2 = new MinMaxPlayer();
 			p2TypeFlag = 1;
 		}
 
+	}
+	public static void gameOver1() {
+		if (board.winner == 1) {
+			System.out.println("Red Player wins !!");
+			red=red+1;
+				
+		} else if (board.winner == 2) {
+			green=green+1;
+		
+			System.out.println("Green Player wins !!");
+		} else {
+			System.out.println("Nobody ! - You both loose!");
+		}
+		 p1score=red;
+		 p2score=green;
+		 createStatusPanel();
+		System.out.println("red"+red);
+		System.out.println("green"+green);
+		 System.out.println("Red player "+red+""+" Green player "+green);  
 	}
 
 	public static void gameOver() {
@@ -484,11 +536,11 @@ return null;
 		JPanel winPanel = new JPanel(new BorderLayout());
 		winPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
 		JLabel winLabel;
-		if (board.winner == 3) {
+		if (red>green) {
 			winLabel = new JLabel("Red Player wins !!");
 			System.out.println("Red Player wins !!");
 			winPanel.add(winLabel);
-		} else if (board.winner == 4) {
+		} else if (green>red) {
 			winLabel = new JLabel("Green Player wins !!");
 			winPanel.add(winLabel);
 			System.out.println("Green Player wins !!");
