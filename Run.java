@@ -66,6 +66,8 @@ public class Run implements ActionListener, ItemListener {
 		menu.setMnemonic(KeyEvent.VK_P);
 		menuBar.add(menu);
 		// add items to menu
+		//Timer timer;
+		//timer = new Timer(1000, new Action)
 		// Submenu one
 		submenu = new JMenu("Player 1");
 			ButtonGroup groupPlayers1 = new ButtonGroup();
@@ -270,14 +272,18 @@ private static void createStatusPanel() {
 			// paint red at [r][c]
 			paintRed(r, c);
 			playerColor="red";
-			System.out.println("Current Board View");
+			System.out.println("xCurrent Board View");
+			checkPlayerScore(board.loc);
+			System.out.println("Player 1 Red"+red+"Green"+green);
             System.out.println(board);
             counter=counter+1;
 		} else if (playerPos == 2) {
 			// paint black at [r][c]
 			paintBlack(r, c);
 			playerColor="green";
-			System.out.println("Current Board View");
+			System.out.println("yCurrent Board View");
+			checkPlayerScore(board.loc);
+			System.out.println("Player 2Red"+red+"Green"+green);
             System.out.println(board);
             counter=counter+1;
 		}
@@ -521,6 +527,8 @@ private static void createStatusPanel() {
 	
 	 private static void checkPlayerScore(int[][] loc) {
 	  		int ii,  ri, ci, di;
+	  		 red=0;
+	  		 green=0;
 	          String checkGrid[] = new String[25];
 
 	          // copy rows:
