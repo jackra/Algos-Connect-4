@@ -77,62 +77,28 @@ public class Run implements ActionListener, ItemListener {
 			rbMenuItem.addItemListener(this);
 			groupPlayers1.add(rbMenuItem);
 			submenu.add(rbMenuItem);
-			subsubmenu = new JMenu("Computer");
-				/*rbMenuItem = new JRadioButtonMenuItem("Random Player");
-				if (p1.getType() == 1) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P1Random");
-				rbMenuItem.addItemListener(this);
-				groupPlayers1.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);*/
-				/*rbMenuItem = new JRadioButtonMenuItem("Defensive Player");
-				if (p1.getType() == 2) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P1Defensive");
-				rbMenuItem.addItemListener(this);
-				groupPlayers1.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);
-				rbMenuItem = new JRadioButtonMenuItem("Aggressive Player");
-				if (p1.getType() == 3) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P1Aggressive");
-				rbMenuItem.addItemListener(this);
-				groupPlayers1.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);*/
-				rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
+			//subsubmenu = new JMenu("Computer");
+			
+				rbMenuItem = new JRadioButtonMenuItem("Computer");
 				if (p1.getType() == 4) rbMenuItem.setSelected(true);
 				rbMenuItem.setName("P1MinMax");
 				rbMenuItem.addItemListener(this);
 				groupPlayers1.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);
-			submenu.add(subsubmenu);
+				submenu.add(rbMenuItem);
+			
 		menu.add(submenu);
 		// submenu 2
 		submenu = new JMenu("Player 2");
 			ButtonGroup groupPlayers2 = new ButtonGroup();
-			subsubmenu = new JMenu("Computer");
-				/*rbMenuItem = new JRadioButtonMenuItem("Random Player");
-				if (p2.getType() == 1) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P2Random");
-				rbMenuItem.addItemListener(this);
-				groupPlayers2.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);
-				rbMenuItem = new JRadioButtonMenuItem("Defensive Player");
-				if (p2.getType() == 2) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P2Defensive");
-				rbMenuItem.addItemListener(this);
-				groupPlayers2.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);
-				rbMenuItem = new JRadioButtonMenuItem("Aggressive Player");
-				if (p2.getType() == 3) rbMenuItem.setSelected(true);
-				rbMenuItem.setName("P2Aggressive");
-				rbMenuItem.addItemListener(this);
-				groupPlayers2.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);*/
-				rbMenuItem = new JRadioButtonMenuItem("MinMax Player");
+			//subsubmenu = new JMenu("Computer");
+				
+				rbMenuItem = new JRadioButtonMenuItem("Computer");
 				if (p2.getType() == 4) rbMenuItem.setSelected(true);
 				rbMenuItem.setName("P2MinMax");
 				rbMenuItem.addItemListener(this);
 				groupPlayers2.add(rbMenuItem);
-				subsubmenu.add(rbMenuItem);
-			submenu.add(subsubmenu);
+				submenu.add(rbMenuItem);
+			//submenu.add(subsubmenu);
 			rbMenuItem = new JRadioButtonMenuItem("Human");
 			if (p1.getType() == 0) rbMenuItem.setSelected(true);
 			rbMenuItem.setName("P2Human");
@@ -458,13 +424,7 @@ private static void createStatusPanel() {
 		} else if (s.equals("P1Human-selected")) {
 			p1 = new HumanPlayer();
 			p1TypeFlag = 0;
-		} else if (s.equals("P1Defensive-selected")) {
-			p1 = new DefensivePlayer();
-			p1TypeFlag = 1;
-		} else if (s.equals("P1Aggressive-selected")) {
-			p1 = new AggressivePlayer();
-			p1TypeFlag = 1;
-		} else if (s.equals("P1MinMax-selected")) {
+		}  else if (s.equals("P1MinMax-selected")) {
 			p1 = new MinMaxPlayer();
 			p1TypeFlag = 1;
 		} else if (s.equals("P2Human-selected")) {
@@ -472,12 +432,6 @@ private static void createStatusPanel() {
 			p2TypeFlag = 0;
 		} else if (s.equals("P2Random-selected")) {
 			p2 = new RandomPlayer();
-			p2TypeFlag = 1;
-		} else if (s.equals("P2Defensive-selected")) {
-			p2 = new DefensivePlayer();
-			p2TypeFlag = 1;
-		} else if (s.equals("P2Aggressive-selected")) {
-			p2 = new AggressivePlayer();
 			p2TypeFlag = 1;
 		} else if (s.equals("P2MinMax-selected")) {
 			p2 = new MinMaxPlayer();
