@@ -17,6 +17,8 @@ public class SimpleBoard{
     public int m_y=0;
     public int winner = 0;
     public int player1 = 0;
+    public static int red=0;
+    public static int green=0;
     public int player2 = 0;
     public boolean out = true;
     public String movelist;
@@ -44,7 +46,8 @@ public class SimpleBoard{
     }
     public void Move(int pos) {
     	try{
-        if ( (pos<0) || (pos >6))
+    	
+        if ( (pos<0) || (pos >6) || pos = null)
             System.out.println("invalid input\n\n");
         else{
             if ((cols[pos]==6)&& out ){
@@ -170,7 +173,13 @@ public class SimpleBoard{
             
         if (z == 0)
         {
-        	System.out.println("x---------------------"+loc[5][0]);
+        	   for (int i = 0; i < 6; i++) {
+        	        for (int j = 0; j < 7; j++) {
+        	        	//System.out.println("x---------------------"+loc[i][j]);
+        	            }
+        	        }
+        	//System.out.println("x---------------------"+loc[5][0]);
+        	checkPlayerScore(loc);
         	//ru.gameOver();
         	//System.out.println("Red playerx "+player1+""+" Green player "+player2);
             return true;
@@ -179,7 +188,102 @@ public class SimpleBoard{
         return false;
     }
     
+    private static void checkPlayerScore(int[][] loc) {
+		int ii,  ri, ci, di;
+        String checkGrid[] = new String[25];
+
+        // copy rows:
+        for(ri = 0; ri < 6; ri++) {
+          String temp = "";
+          for(ci = 0; ci < 7; ci++) {
+            temp += loc[ri][ci];
+          }
+          checkGrid[ri] = temp;
+        }
+        // copy columns:
+        for(ci = 0; ci < 7; ci++) {
+          String temp = "";
+          for(ri = 0; ri < 6; ri++) {
+            temp += loc[ri][ci];
+          }
+          checkGrid[ci + 6] = temp;
+        }
+        // copy first diagonals:
+        for(di = 0; di < 6; di++) {
+          String temp = "";
+          for(ri = 0; ri < 6; ri++) {
+            ci = di - 2;
+            ri = 0;
+            while(ci < 0) {
+              ri++;
+              ci++;
+            }
+            for(; ri < 6; ri++, ci++) {
+              if( ci > 6 ) continue;
+              temp += loc[ri][ci];
+            }
+          }
+          checkGrid[di+13] = temp;
+        }
+        // diagonals in the other direction:
+        for(di = 0; di < 6; di++) {
+          String temp = "";
+          for(ri = 0; ri < 6; ri++) {
+            ci = 8 - di;
+            ri = 0;
+            while(ci >  6) {
+              ri++;
+              ci--;
+            }
+            for(; ri < 6; ri++, ci--) {
+              if( ci < 0 ) continue;
+              temp += loc[ri][ci];
+            }
+          }
+          checkGrid[di+19] = temp;
+        }
+        for(ii = 0; ii < 25; ii++) {
+          System.out.println("Checking '" + checkGrid[ii] + "'");
+          if (checkGrid[ii].contains("1111"))
+          {
+        	  red=red+1; System.out.println("Player A wins!");
+          }
+          if (checkGrid[ii].contains("11111"))
+          {
+        	  red=red+1; System.out.println("Player A wins!");
+          }
+          if (checkGrid[ii].contains("111111"))
+          {
+        	  red=red+1; System.out.println("Player A wins!");
+          }
+        	  
+        	  
+        	 
+          if (checkGrid[ii].contains("2222"))
+        	  {System.out.println("Player B wins!");
+        	 green=green+1;
+              if (checkGrid[ii].contains("22222"))
+              {
+            	  green=green+1;System.out.println("Player B wins!");
+              }
+              if (checkGrid[ii].contains("222222"))
+              {
+            	  green=green+1;System.out.println("Player B wins!");
+              }
+        	  }
+        	  }
+        System.out.println("Red"+red+"Green"+green);
+        if (red>green){
+        System.out.println("Red is the Winner");	
+        }else if(red<green){
+        	System.out.println("Green is the winner");
+        }else if (red == green){
+        	System.out.println("Draw");
+        }
+        }
     
+   
+	
     
    
 
