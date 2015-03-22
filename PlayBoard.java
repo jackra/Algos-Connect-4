@@ -16,13 +16,12 @@ public class PlayBoard {
 	public int winner = 0;
 	public boolean out = true;
 	public String listOfMoves;
-	ConnectFour ru = new ConnectFour(); //Instantiated in order to show the error pop ups
 
 	/** 
 	 * Creates a new instance of SimpleBoard 
 	 * we have [6][7] board as the request in the assignment provided.
 	 * location is initialized with 6 cross 7 board so that each move 
-	 * is updated in the location and patterns are identifies using the
+	 * is updated in the location and patterns are identified using the
 	 * location variable 
 	 */
 	public PlayBoard() {
@@ -46,8 +45,8 @@ public class PlayBoard {
 		}
 	}
 	/**
-	 * it validates the move if the position is < 0 or >6 then the move is 
-	 * considered to be invalid. if the column is full then the move is considered 
+	 * It validates the move if the position is < 0 or >6 then the move is 
+	 * considered to be invalid. If the column is full then the move is considered 
 	 * to be invalid.
 	 * @param pos
 	 */
@@ -72,14 +71,20 @@ public class PlayBoard {
 			 * ConnectFour class.
 			 */
 		} catch (Exception e) {
-			ru.errorColumn();
+			ConnectFour.errorColumn();
 		}
 	}
-
+/**
+ * View method is used to return the location
+ * @return location which is the board grid
+ */
 	public int[][] view() {
 		return location;
 	}
-
+/**
+ * ViewCol returns the corresponding column 
+ * @return column col
+ */
 	public int[] viewcol() {
 		return col;
 	}
@@ -92,7 +97,10 @@ public class PlayBoard {
 		for (int j = 0; j < 7; j++)
 			col[j] = 0;
 	}
-
+/**
+ * next method returns the next player type 
+ * @return 1 if computer player and 0 for human
+ */
 	public int next() {
 		return next_player;
 	}
@@ -101,11 +109,11 @@ public class PlayBoard {
 		return col;
 	}
 	/**
-	 * To check if  the game is over this checks the if all the columns
-	 * and rows are filled if yes, then it is used the ConnectFour class 
-	 * to disable the number buttons so that the user can't further initiate
-	 * a move. The winner is declared based on this method.
-	 * @return
+	 * To check if there is a quadruple combination in any of the rows or columns or 
+	 * left diagonals or right diagonals . If any combination is there it returns true.
+	 * The winner is declared based on this method and based on the combination for the current player 1 or 2.
+	 * Also checks if the board is over or not.
+	 * @return true or false
 	 */
 	public boolean over() {
 		String line_x = "";
@@ -180,7 +188,8 @@ public class PlayBoard {
 		return false;
 	}
 	/**
-	 * 
+	 * Displays the board view in a 2D array format 
+	 * converting the integer array values to  string
 	 */
 	public String toString() {
 		String ret = "   0 1 2 3 4 5 6\n";

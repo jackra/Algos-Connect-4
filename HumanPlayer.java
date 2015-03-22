@@ -48,11 +48,9 @@ public class HumanPlayer implements PlayerInterface {
 		}
 
 		if ((m != -1) && (m != -2)) {
-			// System.out.println(m);
 			b.Move(m);
 		} else {
 			b.Move(n);
-			// System.out.println(n);
 		}
 	}
 

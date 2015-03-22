@@ -14,29 +14,21 @@ import java.util.*;
  */
 
 public class ComputerPlayer implements PlayerInterface {
-	// private int[] location;
 	private State current_state;
 	private int lookahead = 4;
 /**
  * Initialization of the Computer player using the MinMax player
  * If there is a disc already in the place where the MinMax generates output
- * We have used a Math Random function as a back up
+ * We have used a Math Random function to lookup to an alternate solution for the disc placement
  * @param s
  * @return
  */
 	private int minMaxState(State s) {
-		// System.out.println("MiniMax started...");
 		int v = 0;
-		// System.out.println(s.next_player);
 		if (s.next_player == 1)
 			v = maximumValue(s);
 		else
 			v = minimumValue(s);
-		// System.out.print("MiniMax Search Completed. H:");
-		// System.out.println(v);
-
-		// System.out.println("MiniMax finished.");
-
 		for (int i = 0; i < s.suc.size(); i++) {
 			State cell = (State) s.suc.get(i);
 			if (cell.v == v)
@@ -46,7 +38,6 @@ public class ComputerPlayer implements PlayerInterface {
 		 * Math Random if the MinMax algorithm is not able to find
 		 * the position of the disc of the computer player
 		 */
-		// System.out.println("I don't know...");
 		return (int) (Math.random() * 7);
 	}
 /**
@@ -56,15 +47,11 @@ public class ComputerPlayer implements PlayerInterface {
  * the computer player places the disc on the board
  * This is the maximum values of the MinMax tree
  * @param s
- * @return
+ * @return int the max value
  */
 	private int maximumValue(State s) {
-		// System.out.println("MaxValue get called! State: "+s.movelist);
 		if (NodeTest(s)) {
-			// System.out.println("MaxValue: Calling Utility");
 			int u = Placement(s);
-			// System.out.print("MaxValue: The utility of state "+s.movelist+" is ");
-			// System.out.println(s.v);
 			return u;
 		}
 		s.v = -500;
@@ -76,13 +63,6 @@ public class ComputerPlayer implements PlayerInterface {
 				s.v = temp;
 			}
 		}
-		/*
-		 * System.out.print("MaxValue: "); for (int i=0;i<suc.size(); i++){
-		 * State cell=(State) suc.get(i);
-		 * 
-		 * System.out.print(cell.v); System.out.print(" "); }
-		 * System.out.println();
-		 */
 		return s.v;
 	}
 /**
@@ -92,15 +72,11 @@ public class ComputerPlayer implements PlayerInterface {
  * the computer player places the disc on the board
  * This is the minimum values of the MinMax tree 
  * @param s
- * @return
+ * @return int the minimum of max value
  */
 	private int minimumValue(State s) {
-		// System.out.println("MinValue get called! State: "+s.movelist);
 		if (NodeTest(s)) {
-			// System.out.println("MinValue: Calling Utility");
 			int u = Placement(s);
-			// System.out.print("MinValue: The utility of state "+s.movelist+" is ");
-			// System.out.println(s.v);
 			return u;
 		}
 		s.v = 500;
@@ -112,12 +88,6 @@ public class ComputerPlayer implements PlayerInterface {
 			if (temp < s.v)
 				s.v = temp;
 		}
-		/*
-		 * System.out.print("MinValue: "); for (int i=0;i<suc.size(); i++){
-		 * State cell=(State) suc.get(i); System.out.print(cell.v);
-		 * System.out.print(" "); }
-		 */
-		// System.out.println("min of max: "+s.v );
 		return s.v;
 	}
 /**
@@ -127,7 +97,6 @@ public class ComputerPlayer implements PlayerInterface {
  * @return
  */
 	public boolean NodeTest(State s) {
-		// System.out.println("Termininal Testing.  State:"+s.movelist);
 		if ((s.depth == lookahead) || (s.over()))
 			return true;
 		return false;
@@ -138,11 +107,12 @@ public class ComputerPlayer implements PlayerInterface {
  * position of the computer discs and the opponents disc on the board
  * based on the position of the discs, the computer player calculates the 
  * position where the computer player has to place the disc on the board.
+ * First it looks onto whether it has a possibility of a quadruple and then interrupts 
+ * human's possibility and then places accordingly. 
  * @param s
  * @return
  */
 	public int Placement(State s) {
-		// System.out.println("Utility of State "+s.movelist);
 		int me = current_state.next_player;
 		int opponent = 3 - me;
 		if (s.over()) {
@@ -363,29 +333,27 @@ public class ComputerPlayer implements PlayerInterface {
 	 * Instantiation of the new computer player 
 	 */
 	public ComputerPlayer() {
-		System.out.println("ComputerPlayer Initialized.");
 		current_state = new State();
 	}
-
+    /**
+     * 	Returns the Computer player type 2
+     */
 	public int getPlayerType() {
 		return 2;
 	}
 	/**
-	 * It gets the list of moves and then parses 
-	 * here the m initializes the MinMax part and than this comes
-	 * up the Maximum and Minimum probability positions of the computer
+	 * It gets the list of moves and then parses, 
+	 * the m initializes the MinMax part and than it comes
+	 * up with Maximum and Minimum probability positions of the computer
 	 * Maximum move is given higher priority on the board
 	 * 
-	 * @param b
+	 * @param board b
 	 */
 	public void go(PlayBoard b) {
 		State current_state = new State();
-
 		current_state.ParseMove(b.listOfMoves);
-		// System.out.println("MinMaxPlayer thinking...");
 		createSuccessor(current_state);
 		int m = minMaxState(current_state);
-		// System.out.println(m);
 		b.Move(m);
 
 	}
@@ -399,13 +367,14 @@ public class ComputerPlayer implements PlayerInterface {
 	public void setMove(int col) {
 	}
 
-	public void display_tree() {
-
-	}
-
+/**
+ * This is used to create the successor down to level.
+ * Compares the depth of the tree with the lookahead and 
+ * creates the successor using recursive call.
+ * 
+ * @param state s
+ */
 	private void createSuccessor(State s) {
-		// System.out.print("Generate Successors down to level ");
-		// System.out.println(lookahead);
 		Vector chd = new Vector();
 		for (int i = 0; i < 7; i++) {
 			State temp = new State();
@@ -424,7 +393,11 @@ public class ComputerPlayer implements PlayerInterface {
 	}
 
 }
-
+/**
+ * Inner Class that extends Playboard this denotes the state of the board
+ * and sets few default values in the state constructor to be used by computer player class 
+ *
+ */
 class State extends PlayBoard {
 	public int v = -1;
 	public int depth = 0;

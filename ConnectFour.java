@@ -19,11 +19,11 @@ import java.io.PrintStream;
  * We have used JFrame to implement the window GUI for this program
  * Detailed explanation of the methods are given below
  * For further details read the Readme.txt
- * Understanding the game read GamePlan.txt
+ * Understanding the game read GamePlan.pdf
  *
  */
 public class ConnectFour implements ActionListener, ItemListener {
-	//Intantiating objects necessary for the GUI to run
+	//Instantiating objects necessary for the GUI to run
 	static PlayBoard board = new PlayBoard();
 	static JFrame frameMainWindow;
 	static JFrame frameWin;
@@ -47,8 +47,8 @@ public class ConnectFour implements ActionListener, ItemListener {
 			+ green);
 	/**
 	 * Creation of the Menu items using JMenu
-	 * There are Menu to select Players, New Game and Help
-	 * Each of the Menu will have submenu
+	 * Contains Menu to select Players, New Game and Help
+	 * Each of the Menu will have their respective sub menus
 	 */
 	public JMenuBar createMenus() {
 		JMenuBar menuBar;
@@ -75,19 +75,19 @@ public class ConnectFour implements ActionListener, ItemListener {
 		menu.setMnemonic(KeyEvent.VK_P);
 		menuBar.add(menu);
 		// Bringing them together
-		// Submenu one
+		// Submenu 1
 		submenu = new JMenu("Red Player");
 		ButtonGroup groupPlayers1 = new ButtonGroup();
 		rbMenuItem = new JRadioButtonMenuItem("Human");
 		if (p1.getPlayerType() == 0)
-			rbMenuItem.setSelected(true);
+		rbMenuItem.setSelected(true);
 		rbMenuItem.setName("P1Human");
 		rbMenuItem.addItemListener(this);
 		groupPlayers1.add(rbMenuItem);
 		submenu.add(rbMenuItem);
 		rbMenuItem = new JRadioButtonMenuItem("Computer");
 		if (p1.getPlayerType() == 2)
-			rbMenuItem.setSelected(true);
+		rbMenuItem.setSelected(true);
 		rbMenuItem.setName("P1Computer");
 		rbMenuItem.addItemListener(this);
 		groupPlayers1.add(rbMenuItem);
@@ -99,14 +99,14 @@ public class ConnectFour implements ActionListener, ItemListener {
 		ButtonGroup groupPlayers2 = new ButtonGroup();
 		rbMenuItem = new JRadioButtonMenuItem("Computer");
 		if (p2.getPlayerType() == 2)
-			rbMenuItem.setSelected(true);
+		rbMenuItem.setSelected(true);
 		rbMenuItem.setName("P2Computer");
 		rbMenuItem.addItemListener(this);
 		groupPlayers2.add(rbMenuItem);
 		submenu.add(rbMenuItem);
 		rbMenuItem = new JRadioButtonMenuItem("Human");
 		if (p1.getPlayerType() == 0)
-			rbMenuItem.setSelected(true);
+		rbMenuItem.setSelected(true);
 		rbMenuItem.setName("P2Human");
 		rbMenuItem.setSelected(true);
 		rbMenuItem.setMnemonic(KeyEvent.VK_H);
@@ -137,6 +137,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 	/**
 	 * This is used to display the game board on the GUI
 	 * We have used images Board.jpg to display the Board
+	 * and the status panel of the GUI
 	 * Dimensions are as below.
 	 * @return
 	 */
@@ -144,11 +145,11 @@ public class ConnectFour implements ActionListener, ItemListener {
 	public static JLayeredPane createGameBoard() {
 		GameBoard = new JLayeredPane();
 		GameBoard.setPreferredSize(new Dimension(570, 490));
-		GameBoard.setBorder(BorderFactory.createTitledBorder("Connect 4"));
+		GameBoard.setBorder(BorderFactory.createTitledBorder("Max-Connect4"));
 		ImageIcon imageBoard = new ImageIcon("images/Board.jpg");
 		JLabel imageBoardLabel = new JLabel(imageBoard);
 		imageBoardLabel.setBounds(20, 20, imageBoard.getIconWidth(),
-				imageBoard.getIconHeight());
+		imageBoard.getIconHeight());
 		GameBoard.add(imageBoardLabel, new Integer(0), 1);
 		return GameBoard;
 	}
@@ -162,7 +163,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 		board.out = false;
 		if (frameMainWindow != null)
 			frameMainWindow.dispose();
-		frameMainWindow = new JFrame("Connect4");
+		frameMainWindow = new JFrame("Max-Connect4");
 		frameMainWindow.setBounds(100, 100, 400, 300);
 		ConnectFour conFour = new ConnectFour();
 		frameMainWindow.setJMenuBar(conFour.createMenus());
@@ -254,7 +255,8 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * Its used to display the Game board
+	 * Its used to redraw the Game board and based on the player position 1 or 2 the
+	 * corresponding disc will be dropped in the appropriate position in the board
 	 * For each addition of the disc it increments the board counter
 	 * If the disc exceeds the column size it throws exception
 	 */
@@ -291,7 +293,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 			System.out.println("Invalid Move Column is full");
 		}
 		System.out.println("(Red First)");
-		System.out.println("         Moves so Far::" + counter);
+		System.out.println("Moves so Far::" + counter);
 		System.out.println("***********************");
 		createStatusPanel();
 		if (board.over() == true) {
@@ -438,16 +440,6 @@ public class ConnectFour implements ActionListener, ItemListener {
 		return panelMain;
 	}
 
-	/**
-	 * Returns the class name
-	 * @param o
-	 * @return
-	 */
-	protected String getClassName(Object o) {
-		String classString = o.getClass().getName();
-		int dotIndex = classString.lastIndexOf(".");
-		return classString.substring(dotIndex + 1);
-	}
 
 	/**
 	 * Different actions that can be performed using the menu
@@ -466,7 +458,6 @@ public class ConnectFour implements ActionListener, ItemListener {
 			counter = 0;
 			red = 0;
 			green = 0;
-
 			createStatusPanel();
 			designNewGame();
 		} else if (s.equals("QuitGame")) {
@@ -482,7 +473,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * This is used for the selecting the player vs player
+	 * This is used for the selecting the players human or computer from the menus
 	 * Once the player is selected the corresponding class is instantiated
 	 * and the object is created for the game to start.
 	 * @param e
@@ -511,7 +502,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 	 * theEndGame is triggered when the board is full, this is as per the requirement
 	 * doc. Once the board is full the winner is declared based on the scores. The scores
 	 * are updated when there is a combination of four discs either horizontally, vertically
-	 * or diagonally more on this is discussed on the ReadMe.txt and GamePlan.txt.
+	 * or diagonally more on this is discussed on the ReadMe.txt and GamePlan.pdf.
 	 * The winner is declared using a pop up.
 	 */
 	public static void theEndGame() {
@@ -524,22 +515,17 @@ public class ConnectFour implements ActionListener, ItemListener {
 		if (red > green) {
 			winLabel = new JLabel("Red Player wins !!");
 			System.out.println("Red Player wins !!");
-			System.out.println("The above report can be best viewed using NotePad++, TextMate, Sublime 2 and Eclipse IDE, so that there is better formatting of text");
 			winPanel.add(winLabel);
 		} else if (green > red) {
 			winLabel = new JLabel("Green Player wins !!");
 			winPanel.add(winLabel);
 			System.out.println("Green Player wins !!");
-			System.out.println("The above report can be best viewed using NotePad++, TextMate, Sublime 2 and Eclipse IDE, so that there is better formatting of text");
-
-			
 		} else {
 			winLabel = new JLabel("Nobody Win! - You both loose!");
 			winPanel.add(winLabel);
 			System.out.println("Nobody Win! - You both loose!");
-			System.out.println("The above report can be best viewed using NotePad++, TextMate, Sublime 2 and Eclipse IDE, so that there is better formatting of text");
-
 		}
+		System.out.println("The above report can be best viewed using NotePad++, TextMate, Sublime 2 and Eclipse IDE, so that there is better formatting of text");
 		winPanel.add(winLabel, BorderLayout.NORTH);
 		JButton okButton = new JButton("Ok");
 		okButton.addActionListener(new ActionListener() {
@@ -653,10 +639,10 @@ public class ConnectFour implements ActionListener, ItemListener {
 		winPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
 
 		JLabel winLabel = new JLabel(
-				"<HTML><strong>Max Connect-Four</strong><br>"
+				"<HTML><strong>Max-Connect4</strong><br>"
 						+ "                  Version: 1.0              <br>"
-						+ "<pre>Programmers:          Deepak Rohan Sekar<br>"
-						+ "                      Ganesh Ramamoorthy<br><br></pre></HTML>");
+						+ "<pre>Programmers:          Deepak Rohan Sekar(800887228)<br>"
+						+ "                      Ganesh Ramamoorthy(800887691)<br><br></pre></HTML>");
 
 		frameMainWindow.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -675,19 +661,19 @@ public class ConnectFour implements ActionListener, ItemListener {
 	 * The dimensions of the pop up are initialized below.
 	 */
 	private static void howToPlay() {
-		frameCredits = new JFrame("Instrctions");
+		frameCredits = new JFrame("Instructions");
 		frameCredits.setBounds(300, 300, 680, 320);
 		JPanel winPanel = new JPanel(new BorderLayout());
 		winPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 10, 30));
 
 		JLabel winLabel = new JLabel(
 				"<HTML><strong>How To Play</strong><br>"
-						+ "<pre> Red and Green players randomly drop discs by clicking on  <br>"
-						+ " the number of the columnand the disc fill the column. The player <br>"
-						+ " who creates the maximum number of quadraples in four consecutive positions<br>"
-						+ " on board, either in the horizontal, vertical, or each of the<br>"
-						+ " two diagonal directions wins the game. You can select the players from  <br>"
-						+ " the Players menu. Red starts first followed by Green. Scores and last <br>"
+						+ "<pre> Red and Green players randomly drop discs by clicking on the <br>"
+						+ " number of the column and the disc fill the column. The player <br>"
+						+ " who creates the maximum number of quadraples in four consecutive <br> positions"
+						+ " on board, either in the horizontal, vertical, or each <br> of the"
+						+ " two diagonal directions wins the game. You can select the <br> players from"
+						+ " the Players menu. Red starts first followed by Green. <br> Scores and last"
 						+ " moves are updated at the bottom in status bar.<br></pre></HTML>");
 		frameMainWindow.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -728,7 +714,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 
 	/**
 	 * This is used to generate the report when the user wants to
-	 * view the list of each moves made by him.
+	 * view the list of each moves made by him and the results of the moves
 	 * The report is generated using print stream.
 	 */
 	private static void generateReport() {
@@ -744,7 +730,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 		out.println("All the steps and final results can be viewed in report file");
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				// f.setVisible(false);
+				 f.setVisible(false);
 			}
 		};
 
@@ -754,22 +740,22 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * The print stream is used to generate which has the list of all moves
-	 * made by the user on the board. 1 on the report signifies player 1 and 
-	 * 2 signifies player 2 in the game.
+	 * The print stream is used to generate reports which has the list of all moves
+	 * made by the user on the board. 1 on the report signifies Red player and 
+	 * 2 signifies Green player in the game.
+	 * UI Manager is used to enhance the look of the game.
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// Set look and feel to the java look
 		try {
 			
 			  try { PrintStream out = new PrintStream(new
 			  FileOutputStream("report.txt")); System.setOut(out); }
-			  catch (FileNotFoundException e) { // TODO Auto-generated catch
+			  catch (FileNotFoundException e) { System.out.println("Specify the correct File");
 			   }
-			 
+			 //Set look and feel to the UI look
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
+		} catch (Exception e) { System.out.println("Exception in UI");
 		}
 
 		designNewGame();

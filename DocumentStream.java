@@ -14,11 +14,9 @@ import javax.swing.text.*;
 public class DocumentStream extends OutputStream {
 
 	/**
-	 * Output stream is generated with the attributes of a
-	 * @param doc
-	 *            document to write to.
-	 * @param a
-	 *            character attributes to use for the written text.
+	 * Output stream is generated with the attributes of 
+	 * @param doc document to write to.
+	 * @param a character attributes to use for the written text.
 	 */
 	public DocumentStream(Document doc, AttributeSet a) {
 		this.doc = doc;
@@ -27,8 +25,7 @@ public class DocumentStream extends OutputStream {
 
 	/**
 	 * Output stream to output the document
-	 * @param doc
-	 *            the document to write to.
+	 * @param doc the document to write to.
 	 */
 	public DocumentStream(Document doc) {
 		this(doc, null);
@@ -36,7 +33,7 @@ public class DocumentStream extends OutputStream {
 
 	/**
 	 * write is implemented from the OutputStream
-	 * @param b
+	 * @param b denotes the byte
 	 */
 	public void write(int b) throws IOException {
 		one[0] = (byte) b;
@@ -45,9 +42,9 @@ public class DocumentStream extends OutputStream {
 
 	/**
 	 * write is implemented from the OutputStream
-	 * @param b
-	 * @param off
-	 * @param len
+	 * @param b denotes the byte
+	 * @param off denotes the offset value
+	 * @param len denotes the length
 	 */
 	public void write(byte b[], int off, int len) throws IOException {
 		try {
