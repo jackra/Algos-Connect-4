@@ -1,4 +1,4 @@
-@author: Deepak Rohan Sekar, Ganesh Ramamoorthy
+﻿@author: Deepak Rohan Sekar, Ganesh Ramamoorthy
 @date: 21 March, 2014
 @version: 1.0
 
@@ -55,8 +55,8 @@ Implementation
 --------------
 
 The game of connect four has been implemented using the MinMax algorithm. The
-computer player uses the MinMax to calculate the winning move(Max) if not the 
-to stop us from winning and the alternate would be placing it on some place on 
+computer player uses the MinMax to calculate the winning move(Max) if not it prevents 
+the other player's winning move and the alternate would be placing it on some place on 
 the board(Min). The ConnecFour uses the JPanel to provide the GUI. All the options
 and menu have been updated so that you can create three types of games
 	1. Human Vs Human
@@ -152,7 +152,7 @@ Breakdown of files
 ├── images
 │   ├── Board.jpg
 │   ├── Red.jpg
-│   └── green.jpg
+│   └── Green.jpg
 └── report.txt
 			
 What goes well
@@ -167,7 +167,6 @@ Limitations
 
 The report.txt which lists the detailed view of all steps can be best viewed using 
 NotePad++, Sublime2, TextMate or Eclipse inbuilt editor. Notepad view is not so good.
-
 
 
 References
