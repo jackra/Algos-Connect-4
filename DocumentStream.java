@@ -12,7 +12,6 @@ import javax.swing.text.*;
  * (Document). The Document can be either a plain text or styled document
  * implementation. If styled, the attributes assigned to the output stream will
  * be used in the display of the output.
- *
  */
 public class DocumentStream extends OutputStream {
 

@@ -4,12 +4,26 @@
  * @date March 21, 2014 
  */
 import java.util.*;
+/**
+ * Class ComputerPlayer
+ * This is used to implement the way the computer player makes
+ * moves on the board. For better design pattern we extended the
+ * interface Player. Player interface is used by both ComputerPlayer
+ * and HumanPlayer. The ComputerPlayer uses MinMax algorithm to decide
+ * the best move at each point.  
+ */
 
 public class ComputerPlayer implements PlayerInterface {
 	// private int[] location;
 	private State current_state;
 	private int lookahead = 4;
-
+/**
+ * Initialization of the Computer player using the MinMax player
+ * If there is a disc already in the place where the MinMax generates output
+ * We have used a Math Random function as a back up
+ * @param s
+ * @return
+ */
 	private int minMaxState(State s) {
 		// System.out.println("MiniMax started...");
 		int v = 0;
@@ -28,10 +42,22 @@ public class ComputerPlayer implements PlayerInterface {
 			if (cell.v == v)
 				return cell.action;
 		}
+		/*
+		 * Math Random if the MinMax algorithm is not able to find
+		 * the position of the disc of the computer player
+		 */
 		// System.out.println("I don't know...");
 		return (int) (Math.random() * 7);
 	}
-
+/**
+ * It gets the list of moves list for the computerPlayer
+ * NodeTest is called to check if the column is not full
+ * If the column is not full it calls the placement so that
+ * the computer player places the disc on the board
+ * This is the maximum values of the MinMax tree
+ * @param s
+ * @return
+ */
 	private int maximumValue(State s) {
 		// System.out.println("MaxValue get called! State: "+s.movelist);
 		if (NodeTest(s)) {
@@ -59,7 +85,15 @@ public class ComputerPlayer implements PlayerInterface {
 		 */
 		return s.v;
 	}
-
+/**
+ * It gets the list of moves list for the computerPlayer
+ * NodeTest is called to check if the column is not full
+ * If the column is not full it calls the placement so that
+ * the computer player places the disc on the board
+ * This is the minimum values of the MinMax tree 
+ * @param s
+ * @return
+ */
 	private int minimumValue(State s) {
 		// System.out.println("MinValue get called! State: "+s.movelist);
 		if (NodeTest(s)) {
@@ -86,14 +120,27 @@ public class ComputerPlayer implements PlayerInterface {
 		// System.out.println("min of max: "+s.v );
 		return s.v;
 	}
-
+/**
+ * This method returns false if the board is full and true if the 
+ * board is full based on this the move is calculated by the MinMax
+ * @param s
+ * @return
+ */
 	public boolean NodeTest(State s) {
 		// System.out.println("Termininal Testing.  State:"+s.movelist);
 		if ((s.depth == lookahead) || (s.over()))
 			return true;
 		return false;
 	}
-
+/**
+ * Checks if the next player is the computer player and also makes sure
+ * the game is not over using an if else condition. Then it analyzes the 
+ * position of the computer discs and the opponents disc on the board
+ * based on the position of the discs, the computer player calculates the 
+ * position where the computer player has to place the disc on the board.
+ * @param s
+ * @return
+ */
 	public int Placement(State s) {
 		// System.out.println("Utility of State "+s.movelist);
 		int me = current_state.next_player;
@@ -116,22 +163,29 @@ public class ComputerPlayer implements PlayerInterface {
 		int h = 0;
 		int row = s.move_x;
 		int col = s.move_y;
+		/*
+		 * List of moves, this checks where the discs of the computer and 
+		 * Opponent are placed on the board based on the analysis it comes
+		 * up with a maximum probability move if the disc placed there than
+		 * the minimumValue for the tree is calculated. This is similar to 
+		 * MinMax tree. Various directions of calculations are listed below.
+		 */
 
 		if ((col >= 3) && (s.location[row][col - 1] == me)
 				&& (s.location[row][col - 2] == me)
 				&& (s.location[row][col - 3] == me))
 			h = h + 16;
-		// right
+		// right direction
 		if ((col <= 3) && (s.location[row][col + 1] == me)
 				&& (s.location[row][col + 2] == me)
 				&& (s.location[row][col + 3] == me))
 			h = h + 16;
-		// check y direction
+		// y direction
 		if ((row <= 2) && (s.location[row + 1][col] == me)
 				&& (s.location[row + 2][col] == me)
 				&& (s.location[row + 3][col] == me))
 			h = h + 16;
-		// check left diagonal
+		//  left diagonal
 		if ((col >= 3) && (row <= 2) && (s.location[row + 1][col - 1] == me)
 				&& (s.location[row + 2][col - 2] == me)
 				&& (s.location[row + 3][col - 3] == me))
@@ -155,15 +209,15 @@ public class ComputerPlayer implements PlayerInterface {
 		if ((col >= 2) && (s.location[row][col - 1] == me)
 				&& (s.location[row][col - 2] == me))
 			h = h + 4;
-		// right
+		// right direction
 		if ((col <= 4) && (s.location[row][col + 1] == me)
 				&& (s.location[row][col + 2] == me))
 			h = h + 4;
-		// check y direction
+		// y direction
 		if ((row <= 3) && (s.location[row + 1][col] == me)
 				&& (s.location[row + 2][col] == me))
 			h = h + 4;
-		// check left diagonal
+		// left diagonal
 		if ((col >= 2) && (row <= 3) && (s.location[row + 1][col - 1] == me)
 				&& (s.location[row + 2][col - 2] == me))
 			h = h + 4;
@@ -182,14 +236,14 @@ public class ComputerPlayer implements PlayerInterface {
 
 		if ((col >= 1) && (s.location[row][col - 1] == me))
 			h = h + 2;
-		// right
+		// right direction
 
 		if ((col <= 5) && (s.location[row][col + 1] == me))
 			h = h + 2;
-		// check y direction
+		//  y direction
 		if ((row <= 4) && (s.location[row + 1][col] == me))
 			h = h + 2;
-		// check left diagonal
+		//  left diagonal
 		if ((col >= 1) && (row <= 4) && (s.location[row + 1][col - 1] == me))
 			h = h + 2;
 
@@ -202,23 +256,23 @@ public class ComputerPlayer implements PlayerInterface {
 		if ((col <= 5) && (row >= 1) && (s.location[row - 1][col + 1] == me))
 			h = h + 2;
 
-		// check x direction.
+		//  x direction.
 		// left
 		if ((col >= 3) && (s.location[row][col - 1] == opponent)
 				&& (s.location[row][col - 2] == opponent)
 				&& (s.location[row][col - 3] == opponent))
 			h = h + 8;
-		// right
+		// right direction
 		if ((col <= 3) && (s.location[row][col + 1] == opponent)
 				&& (s.location[row][col + 2] == opponent)
 				&& (s.location[row][col + 3] == opponent))
 			h = h + 8;
-		// check y direction
+		//  y direction
 		if ((row <= 2) && (s.location[row + 1][col] == opponent)
 				&& (s.location[row + 2][col] == opponent)
 				&& (s.location[row + 3][col] == opponent))
 			h = h + 8;
-		// check left diagonal
+		//  left diagonal
 		if ((col >= 3) && (row <= 2)
 				&& (s.location[row + 1][col - 1] == opponent)
 				&& (s.location[row + 2][col - 2] == opponent)
@@ -246,15 +300,15 @@ public class ComputerPlayer implements PlayerInterface {
 		if ((col >= 2) && (s.location[row][col - 1] == opponent)
 				&& (s.location[row][col - 2] == opponent))
 			h = h + 4;
-		// right
+		// right direction
 		if ((col <= 4) && (s.location[row][col + 1] == opponent)
 				&& (s.location[row][col + 2] == opponent))
 			h = h + 4;
-		// check y direction
+		//  y direction
 		if ((row <= 3) && (s.location[row + 1][col] == opponent)
 				&& (s.location[row + 2][col] == opponent))
 			h = h + 4;
-		// check left diagonal
+		// left diagonal
 		if ((col >= 2) && (row <= 3)
 				&& (s.location[row + 1][col - 1] == opponent)
 				&& (s.location[row + 2][col - 2] == opponent))
@@ -277,14 +331,14 @@ public class ComputerPlayer implements PlayerInterface {
 
 		if ((col >= 1) && (s.location[row][col - 1] == opponent))
 			h = h + 2;
-		// right
+		// right direction
 
 		if ((col <= 5) && (s.location[row][col + 1] == opponent))
 			h = h + 2;
-		// check y direction
+		//  y direction
 		if ((row <= 4) && (s.location[row + 1][col] == opponent))
 			h = h + 2;
-		// check left diagonal
+		//  left diagonal
 		if ((col >= 1) && (row <= 4)
 				&& (s.location[row + 1][col - 1] == opponent))
 			h = h + 2;
@@ -305,7 +359,9 @@ public class ComputerPlayer implements PlayerInterface {
 		return h;
 	}
 
-	/** Creates a new instance of ComputerPlayer */
+	/** 
+	 * Instantiation of the new computer player 
+	 */
 	public ComputerPlayer() {
 		System.out.println("ComputerPlayer Initialized.");
 		current_state = new State();
@@ -314,7 +370,14 @@ public class ComputerPlayer implements PlayerInterface {
 	public int getPlayerType() {
 		return 2;
 	}
-
+	/**
+	 * It gets the list of moves and then parses 
+	 * here the m initializes the MinMax part and than this comes
+	 * up the Maximum and Minimum probability positions of the computer
+	 * Maximum move is given higher priority on the board
+	 * 
+	 * @param b
+	 */
 	public void go(PlayBoard b) {
 		State current_state = new State();
 
@@ -326,7 +389,13 @@ public class ComputerPlayer implements PlayerInterface {
 		b.Move(m);
 
 	}
-
+	/**
+	 * This is a part of implementing the interface, the move for the 
+	 * computer player is calculated using the MinMax algorithm so the
+	 * below method doesn't return any value.
+	 * However in the case of human player it returns the value of the 
+	 * column where the disc has to be dropped.
+	 */
 	public void setMove(int col) {
 	}
 

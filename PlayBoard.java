@@ -2,9 +2,13 @@
  * @author Ganesh Ramamoorthy, Deepak Rohan Sekar
  * @version 1.0
  * @date March 21, 2014
+ * 
+ * class PlayBoard is mainly considered with design of the game board
+ * We have two dimensional matrix which is always updated with new
+ * moves made by the users at each move.
  */
 public class PlayBoard {
-	public int[][] location;
+	public int[][] location; //This has the list of moves made by the players
 	public int next_player;
 	public int[] col;
 	public int move_x = 0;
@@ -14,10 +18,16 @@ public class PlayBoard {
 	public String listOfMoves;
 	ConnectFour ru = new ConnectFour(); //Instantiated in order to show the error pop ups
 
-	/** Creates a new instance of SimpleBoard */
+	/** 
+	 * Creates a new instance of SimpleBoard 
+	 * we have [6][7] board as the request in the assignment provided.
+	 * location is initialized with 6 cross 7 board so that each move 
+	 * is updated in the location and patterns are identifies using the
+	 * location variable 
+	 */
 	public PlayBoard() {
 		next_player = 1;
-		location = new int[6][7];
+		location = new int[6][7];//Connect 4 has 6 X 7 cells
 		col = new int[7];
 		winner = 0;
 		clear();
@@ -25,7 +35,7 @@ public class PlayBoard {
 		out = true;
 	}
 	/**
-	 * Parses each move from the String move_lust
+	 * Parses each move from the String move_list
 	 * @param move_list
 	 */
 	public void ParseMove(String move_list) {
@@ -148,6 +158,10 @@ public class PlayBoard {
 					|| (line_ld.matches(match)) || (line_rd.matches(match))) {
 				winner = 3 - next_player;
 			}
+			/*
+			 * If the user tries to make an invalid move we have used the below
+			 * exception handling to capture the invalid moves.
+			 */
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Invalid Move Column is full");
 		}
@@ -162,7 +176,7 @@ public class PlayBoard {
 		}
 		return false;
 	}
-
+	
 	public String toString() {
 		String ret = "   0 1 2 3 4 5 6\n";
 		for (int i = 0; i < 6; i++) {
