@@ -1,4 +1,7 @@
 /**
+ * @author Ganesh Ramamoorthy, Deepak Rohan Sekar
+ * @version 1.0
+ * @date March 21, 2014
  */
 
 import javax.swing.*;
@@ -11,11 +14,16 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 /**
- * 
+ * class ConnectFour
+ * This is used to implement the UI of the Connect 4 Game.
+ * We have used JFrame to implement the window GUI for this program
+ * Detailed explanation of the methods are given below
+ * For further details read the Readme.txt
+ * Understanding the game read GamePlan.txt
  *
  */
 public class ConnectFour implements ActionListener, ItemListener {
-	// create objects
+	//Intantiating objects necessary for the GUI to run
 	static PlayBoard board = new PlayBoard();
 	static JFrame frameMainWindow;
 	static JFrame frameWin;
@@ -37,18 +45,22 @@ public class ConnectFour implements ActionListener, ItemListener {
 	static JLabel statusLabel3 = new JLabel("   ( Red First )   ");
 	static JLabel statusLabel4 = new JLabel("         Score : " + red + "-"
 			+ green);
-
+	/**
+	 * Creation of the Menu items using JMenu
+	 * There are Menu to select Players, New Game and Help
+	 * Each of the Menu will have submenu
+	 */
 	public JMenuBar createMenus() {
 		JMenuBar menuBar;
 		JMenu menu, submenu;
 		JMenuItem menuItem;
 		JRadioButtonMenuItem rbMenuItem;
-		// create and build first menu
+		//First Menu
 		menuBar = new JMenuBar();
 		menu = new JMenu("File");
 		menu.setMnemonic(KeyEvent.VK_F);
 		menuBar.add(menu);
-		// add items to menu
+		// Adding the items to the first Menu
 		menuItem = new JMenuItem("New game", KeyEvent.VK_N);
 		menuItem.setName("NewGame");
 		menuItem.addActionListener(this);
@@ -58,11 +70,11 @@ public class ConnectFour implements ActionListener, ItemListener {
 		menuItem.setName("QuitGame");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
-		// create and build second menu
+		// Second Menu to select the players
 		menu = new JMenu("Players");
 		menu.setMnemonic(KeyEvent.VK_P);
 		menuBar.add(menu);
-		// add items to menu
+		// Bringing them together
 		// Submenu one
 		submenu = new JMenu("Red Player");
 		ButtonGroup groupPlayers1 = new ButtonGroup();
@@ -82,7 +94,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 		submenu.add(rbMenuItem);
 		menu.add(submenu);
 		menu.addSeparator();
-		// submenu 2
+		// Submenu 2
 		submenu = new JMenu("Green Player");
 		ButtonGroup groupPlayers2 = new ButtonGroup();
 		rbMenuItem = new JRadioButtonMenuItem("Computer");
@@ -103,10 +115,9 @@ public class ConnectFour implements ActionListener, ItemListener {
 		submenu.add(rbMenuItem);
 		menu.add(submenu);
 		menuBar.add(Box.createGlue());
-		// create Help menu
+		//Creating Help Menu
 		menu = new JMenu("Help");
 		menuBar.add(menu);
-		// add items to menu
 		menuItem = new JMenuItem("Instructions");
 		menuItem.setName("Instructions");
 		menuItem.addActionListener(this);
@@ -116,7 +127,6 @@ public class ConnectFour implements ActionListener, ItemListener {
 		menuItem.setName("Report");
 		menuItem.addActionListener(this);
 		menu.add(menuItem);
-		// menu.add(Box.createHorizontalGlue());
 		menu.addSeparator();
 		menuItem = new JMenuItem("About");
 		menuItem.setName("About");
@@ -124,6 +134,12 @@ public class ConnectFour implements ActionListener, ItemListener {
 		menu.add(menuItem);
 		return menuBar;
 	}
+	/**
+	 * This is used to display the game board on the GUI
+	 * We have used images Board.jpg to display the Board
+	 * Dimensions are as below.
+	 * @return
+	 */
 
 	public static JLayeredPane createGameBoard() {
 		GameBoard = new JLayeredPane();
@@ -138,7 +154,8 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * Adding up the Buttons to the created GUI Frame
+	 * Adding functionality like close and createMenus
 	 */
 	public static void designNewGame() {
 		board = new PlayBoard();
@@ -184,7 +201,11 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * This is the status panel of the GUI display
+	 * As per the request in the Programming algorithm 
+	 * we have added Moves so far to display the number of moves
+	 * Last Move to display who has moved last
+	 * and score which updates on every move of the user
 	 */
 	private static void createStatusPanel() {
 		statusLabel1.setText("         Moves so far :" + counter);
@@ -196,7 +217,13 @@ public class ConnectFour implements ActionListener, ItemListener {
 		statusPanel.add(statusLabel1);
 		frameMainWindow.add(statusPanel, BorderLayout.SOUTH);
 	}
-
+	/**
+	 * Method which is used to display the red discs on the GUI
+	 * used the Red.jpg from the images to display the disc
+	 * the parameters pass the exact position of the disc
+	 * @param row
+	 * @param col
+	 */
 	public static void colorRed(int row, int col) {
 		int xOffset = 75 * col;
 		int yOffset = 75 * row;
@@ -209,7 +236,9 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * Method which is used to display the green discs on the GUI
+	 * used the Green.jpg from the images to display the disc
+	 * the parameters pass the exact position of the disc
 	 * @param row
 	 * @param col
 	 */
@@ -225,7 +254,9 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * Its used to display the Game board
+	 * For each addition of the disc it increments the board counter
+	 * If the disc exceeds the column size it throws exception
 	 */
 	public static void redrawGameBoard() {
 
@@ -251,6 +282,11 @@ public class ConnectFour implements ActionListener, ItemListener {
 				System.out.println(board);
 				counter = counter + 1;
 			}
+			/*
+			 * ArrayOutOfBoundExceptions if the user tries to put more than the allowed
+			 * discs into a column. The error message is displayed in the report as well
+			 * as pop menu is used to notify the user that its an invalid move.
+			 */
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Invalid Move Column is full");
 		}
@@ -265,7 +301,10 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * It prints the scores of red and green players this is how the report is
+	 * updated and mean while this updates the status panel
+	 * calls theEndgame method so that the user can make no more moves and the winner
+	 * is declared based on the scores.
 	 */
 	public static void gameOverPanelUpdate() {
 		System.out.println("red" + red);
@@ -275,7 +314,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * This method decides on who needs to play the game next
 	 */
 	public static void playGame() {
 		if (board.next() == 1)
@@ -300,6 +339,9 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
+	 * This method is used to create each button for each column so that the 
+	 * user can drop discs into the column using the number buttons.
+	 * It users Jpanel and JButton 
 	 * @return Component - Returns a component to be drawn by main window
 	 * @see main() This function creates the main window components.
 	 */
@@ -385,24 +427,22 @@ public class ConnectFour implements ActionListener, ItemListener {
 		panelNumbers.add(buttonCol4);
 		panelNumbers.add(buttonCol5);
 		panelNumbers.add(buttonCol6);
-		// create game board with pieces
+		// Creates the game with board with the pieces, the GUI
 		GameBoard = createGameBoard();
 		// create panel to hold all of above
 		JPanel panelMain = new JPanel();
 		panelMain.setLayout(new BorderLayout());
 		panelMain.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		// add objects to pane
 		panelMain.add(panelNumbers, BorderLayout.NORTH);
 		panelMain.add(GameBoard, BorderLayout.CENTER);
 		return panelMain;
 	}
 
 	/**
-	 * 
+	 * Returns the class name
 	 * @param o
 	 * @return
 	 */
-	// Returns just the class name -- no package info.
 	protected String getClassName(Object o) {
 		String classString = o.getClass().getName();
 		int dotIndex = classString.lastIndexOf(".");
@@ -410,7 +450,11 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * Different actions that can be performed using the menu
+	 * New Game is used to start a game
+	 * Instructions displays the instructions on how to play the game
+	 * Report generates a report using printstream
+	 * About has the version details
 	 */
 	public void actionPerformed(ActionEvent e) {
 		JMenuItem source = (JMenuItem) (e.getSource());
@@ -438,7 +482,10 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * This is used for the selecting the player vs player
+	 * Once the player is selected the corresponding class is instantiated
+	 * and the object is created for the game to start.
+	 * @param e
 	 */
 	public void itemStateChanged(ItemEvent e) {
 		JMenuItem source = (JMenuItem) (e.getSource());
@@ -461,7 +508,11 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * theEndGame is triggered when the board is full, this is as per the requirement
+	 * doc. Once the board is full the winner is declared based on the scores. The scores
+	 * are updated when there is a combination of four discs either horizontally, vertically
+	 * or diagonally more on this is discussed on the ReadMe.txt and GamePlan.txt.
+	 * The winner is declared using a pop up.
 	 */
 	public static void theEndGame() {
 		panelNumbers.setVisible(false);
@@ -496,7 +547,10 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * the method is used to check the scores of the red and green player
+	 * At the end of each move we try to identify the patterns of the red and Green 
+	 * player and try to match them vertically, horizontally and diagonally based on
+	 * the matches we increment the scores of each player.
 	 * @param loc
 	 */
 	private static void checkPlayerScore(int[][] loc) {
@@ -586,7 +640,8 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * This just provides a pop up showing the version and the developer details
+	 * It has the dimensions and the static content to be displayed on the pop up
 	 */
 	public static void softwareVersionDetails() {
 		frameCredits = new JFrame("Credits");
@@ -612,7 +667,9 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * This method displays a pop up showing the instructions on how to play connect 4
+	 * It has just the static content below, which is displayed on the board.
+	 * The dimensions of the pop up are initialized below.
 	 */
 	private static void howToPlay() {
 		frameCredits = new JFrame("Instrctions");
@@ -641,7 +698,10 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * When the user tries to fill the column beyond the limit
+	 * It shows a pop up showing the invalid move, this was designed
+	 * on the request as per the assignment document.
+	 * The dimensions of the pop up are given below. 
 	 */
 	public static void errorColumn() {
 		frameErr = new JFrame("Error !!");
@@ -664,7 +724,9 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * This is used to generate the report when the user wants to
+	 * view the list of each moves made by him.
+	 * The report is generated using print stream.
 	 */
 	private static void generateReport() {
 		JFrame f = new JFrame("Report");
@@ -689,7 +751,9 @@ public class ConnectFour implements ActionListener, ItemListener {
 	}
 
 	/**
-	 * 
+	 * The print stream is used to generate which has the list of all moves
+	 * made by the user on the board. 1 on the report signifies player 1 and 
+	 * 2 signifies player 2 in the game.
 	 * @param args
 	 */
 	public static void main(String[] args) {

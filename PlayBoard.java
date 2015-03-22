@@ -1,7 +1,7 @@
-
 /**
- *
- * @author Ganesh
+ * @author Ganesh Ramamoorthy, Deepak Rohan Sekar
+ * @version 1.0
+ * @date March 21, 2014
  */
 public class PlayBoard {
 	public int[][] location;
@@ -12,7 +12,7 @@ public class PlayBoard {
 	public int winner = 0;
 	public boolean out = true;
 	public String listOfMoves;
-	ConnectFour ru = new ConnectFour();
+	ConnectFour ru = new ConnectFour(); //Instantiated in order to show the error pop ups
 
 	/** Creates a new instance of SimpleBoard */
 	public PlayBoard() {
@@ -24,7 +24,10 @@ public class PlayBoard {
 		listOfMoves = "";
 		out = true;
 	}
-
+	/**
+	 * Parses each move from the String move_lust
+	 * @param move_list
+	 */
 	public void ParseMove(String move_list) {
 		for (int i = 0; i < move_list.length(); i++) {
 			int tm = Integer.parseInt((new Character(move_list.charAt(i)))
@@ -32,7 +35,12 @@ public class PlayBoard {
 			Move(tm);
 		}
 	}
-
+	/**
+	 * it validates the move if the position is < 0 or >6 then the move is 
+	 * considered to be invalid. if the column is full then the move is considered 
+	 * to be invalid.
+	 * @param pos
+	 */
 	public void Move(int pos) {
 		try {
 			if ((pos < 0) || (pos > 6))
@@ -49,6 +57,10 @@ public class PlayBoard {
 					next_player = 3 - next_player;
 				}
 			}
+			/*
+			 * Column is full it will trigger the pop up declared in the 
+			 * ConnectFour class.
+			 */
 		} catch (Exception e) {
 			ru.errorColumn();
 		}
@@ -78,7 +90,10 @@ public class PlayBoard {
 	public int[] ret_col() {
 		return col;
 	}
-
+	/**
+	 * To check if  the game is over
+	 * @return
+	 */
 	public boolean over() {
 		String line_x = "";
 		String line_y = "";
