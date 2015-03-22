@@ -5,8 +5,7 @@
  * 
  * class DocumentStream extends the class OutputStream This has been
  * used to generate the output of the instructions and the output 
- * of the credits with the specified attributes, report generation
- * was another requirement of the assignment. Here this class has been 
+ * of the credits with the specified attributes, Here this class has been 
  * used to generate a plain text or styled document.
  */
 import java.io.OutputStream;
