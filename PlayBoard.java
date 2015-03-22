@@ -101,7 +101,10 @@ public class PlayBoard {
 		return col;
 	}
 	/**
-	 * To check if  the game is over
+	 * To check if  the game is over this checks the if all the columns
+	 * and rows are filled if yes, then it is used the ConnectFour class 
+	 * to disable the number buttons so that the user can't further initiate
+	 * a move. The winner is declared based on this method.
 	 * @return
 	 */
 	public boolean over() {
@@ -176,7 +179,9 @@ public class PlayBoard {
 		}
 		return false;
 	}
-	
+	/**
+	 * 
+	 */
 	public String toString() {
 		String ret = "   0 1 2 3 4 5 6\n";
 		for (int i = 0; i < 6; i++) {

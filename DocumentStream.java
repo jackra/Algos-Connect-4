@@ -2,27 +2,24 @@
  * @author Deepak Rohan Sekar, Ganesh Ramamoorthy
  * @version 1.0
  * @date March 21, 2014 
+ * 
+ * class DocumentStream extends the class OutputStream This has been
+ * used to generate the output of the instructions and the output 
+ * of the credits with the specified attributes, report generation
+ * was another requirement of the assignment. Here this class has been 
+ * used to generate a plain text or styled document.
  */
 import java.io.OutputStream;
 import java.io.IOException;
 import javax.swing.text.*;
-
-/**
- * An OutputStream implementation that places it's output in a swing text model
- * (Document). The Document can be either a plain text or styled document
- * implementation. If styled, the attributes assigned to the output stream will
- * be used in the display of the output.
- */
 public class DocumentStream extends OutputStream {
 
 	/**
-	 * Constructs an output stream that will output to the given document with
-	 * the given set of character attributes.
-	 *
+	 * Output stream is generated with the attributes of a
 	 * @param doc
-	 *            the document to write to.
+	 *            document to write to.
 	 * @param a
-	 *            the character attributes to use for the written text.
+	 *            character attributes to use for the written text.
 	 */
 	public DocumentStream(Document doc, AttributeSet a) {
 		this.doc = doc;
@@ -30,9 +27,7 @@ public class DocumentStream extends OutputStream {
 	}
 
 	/**
-	 * Constructs an output stream that will output to the given document with
-	 * whatever the default attributes are.
-	 *
+	 * Output stream to output the document
 	 * @param doc
 	 *            the document to write to.
 	 */
@@ -41,16 +36,8 @@ public class DocumentStream extends OutputStream {
 	}
 
 	/**
-	 * Writes the specified byte to this output stream.
-	 * <p>
-	 * Subclasses of <code>OutputStream</code> must provide an implementation
-	 * for this method.
-	 *
+	 * write is implemented from the OutputStream
 	 * @param b
-	 *            the <code>byte</code>.
-	 * @exception IOException
-	 *                if an I/O error occurs.
-	 * @since JDK1.0
 	 */
 	public void write(int b) throws IOException {
 		one[0] = (byte) b;
@@ -58,23 +45,10 @@ public class DocumentStream extends OutputStream {
 	}
 
 	/**
-	 * Writes <code>len</code> bytes from the specified byte array starting at
-	 * offset <code>off</code> to this output stream.
-	 * <p>
-	 * The <code>write</code> method of <code>OutputStream</code> calls the
-	 * write method of one argument on each of the bytes to be written out.
-	 * Subclasses are encouraged to override this method and provide a more
-	 * efficient implementation.
-	 *
+	 * write is implemented from the OutputStream
 	 * @param b
-	 *            the data.
 	 * @param off
-	 *            the start offset in the data.
 	 * @param len
-	 *            the number of bytes to write.
-	 * @exception IOException
-	 *                if an I/O error occurs.
-	 * @since JDK1.0
 	 */
 	public void write(byte b[], int off, int len) throws IOException {
 		try {

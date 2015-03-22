@@ -268,17 +268,17 @@ public class ConnectFour implements ActionListener, ItemListener {
 			if (playerPos == 1) {
 				colorRed(r, g);
 				playerColor = "red";
-				System.out.println("xCurrent Board View");
+				System.out.println("Current Board View");
 				checkPlayerScore(board.location);
-				System.out.println("Player 1 Red" + red + "Green" + green);
+				System.out.println("Red Score: " + red + " , " +"Green Score: " + green);
 				System.out.println(board);
 				counter = counter + 1;
 			} else if (playerPos == 2) {
 				colorGreen(r, g);
 				playerColor = "green";
-				System.out.println("yCurrent Board View");
+				System.out.println("Current Board View");
 				checkPlayerScore(board.location);
-				System.out.println("Player 2Red" + red + "Green" + green);
+				System.out.println("Red Score: " + red + " , " +"Green Score: " + green);
 				System.out.println(board);
 				counter = counter + 1;
 			}
@@ -307,8 +307,8 @@ public class ConnectFour implements ActionListener, ItemListener {
 	 * is declared based on the scores.
 	 */
 	public static void gameOverPanelUpdate() {
-		System.out.println("red" + red);
-		System.out.println("green" + green);
+		System.out.println("Red: " + red);
+		System.out.println("Green: " + green);
 		createStatusPanel();
 		theEndGame();
 	}
@@ -524,15 +524,21 @@ public class ConnectFour implements ActionListener, ItemListener {
 		if (red > green) {
 			winLabel = new JLabel("Red Player wins !!");
 			System.out.println("Red Player wins !!");
+			System.out.println("The above report can be best viewed using NotePad++, TextMate, Sublime 2 and Eclipse IDE, so that there is better formatting of text");
 			winPanel.add(winLabel);
 		} else if (green > red) {
 			winLabel = new JLabel("Green Player wins !!");
 			winPanel.add(winLabel);
 			System.out.println("Green Player wins !!");
+			System.out.println("The above report can be best viewed using NotePad++, TextMate, Sublime 2 and Eclipse IDE, so that there is better formatting of text");
+
+			
 		} else {
 			winLabel = new JLabel("Nobody Win! - You both loose!");
 			winPanel.add(winLabel);
 			System.out.println("Nobody Win! - You both loose!");
+			System.out.println("The above report can be best viewed using NotePad++, TextMate, Sublime 2 and Eclipse IDE, so that there is better formatting of text");
+
 		}
 		winPanel.add(winLabel, BorderLayout.NORTH);
 		JButton okButton = new JButton("Ok");
@@ -610,31 +616,28 @@ public class ConnectFour implements ActionListener, ItemListener {
 			}
 			checkGrid[di + 19] = temp;
 		}
+		/*
+		 * the below for loop is to increment the scores of the players
+		 * if there is a match in the pattern found.
+		 */
 		for (ii = 0; ii < 25; ii++) {
-			// System.out.println("Checking '" + checkGrid[ii] + "'");
 			if (checkGrid[ii].contains("1111")) {
 				red = red + 1;
-				System.out.println("Player A wins!");
 			}
 			if (checkGrid[ii].contains("11111")) {
 				red = red + 1;
-				System.out.println("Player A wins!");
 			}
 			if (checkGrid[ii].contains("111111")) {
 				red = red + 1;
-				System.out.println("Player A wins!");
 			}
 			if (checkGrid[ii].contains("2222")) {
-				System.out.println("Player B wins!");
 				green = green + 1;
 			}
 			if (checkGrid[ii].contains("22222")) {
 				green = green + 1;
-				System.out.println("Player B wins!");
 			}
 			if (checkGrid[ii].contains("222222")) {
 				green = green + 1;
-				System.out.println("Player B wins!");
 			}
 		}
 	}
@@ -738,7 +741,7 @@ public class ConnectFour implements ActionListener, ItemListener {
 		out.println("Score : " + red + "-" + green + " (red first)");
 		out.println("Last Move : " + playerColor);
 		out.println("Moves so far : " + counter);
-		out.println("All the steps and final results can be viewed in answer file");
+		out.println("All the steps and final results can be viewed in report file");
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				// f.setVisible(false);
@@ -759,12 +762,12 @@ public class ConnectFour implements ActionListener, ItemListener {
 	public static void main(String[] args) {
 		// Set look and feel to the java look
 		try {
-			/*
-			 * try { PrintStream out = new PrintStream(new
-			 * FileOutputStream("C:/DELL/answer3.txt")); System.setOut(out); }
-			 * catch (FileNotFoundException e) { // TODO Auto-generated catch
-			 * block e.printStackTrace(); }
-			 */
+			
+			  try { PrintStream out = new PrintStream(new
+			  FileOutputStream("report.txt")); System.setOut(out); }
+			  catch (FileNotFoundException e) { // TODO Auto-generated catch
+			   }
+			 
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 		}
