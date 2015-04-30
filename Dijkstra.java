@@ -1,15 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 import java.util.Set;
@@ -137,8 +134,8 @@ public class Dijkstra {
         	Vertex source = vertexMap.get(sourcePath);
             computePaths(source); 
         Vertex Dest = vertexMap.get(destPath);
-    	List<Vertex> path = getShortestPathTo(Dest);
-        System.out.println("Path: " + path+" "+ truncateDecimal(Dest.minDistance, 4));}
+    	List<Vertex> path = getShortestPathTo(Dest);//truncateDecimal(Dest.minDistance, 4)
+        System.out.println("Path: " + path+" "+    Math.round(Dest.minDistance*100)/100D);}
         if(number.equals("2"))
         {
         printGraph(vertices);}
