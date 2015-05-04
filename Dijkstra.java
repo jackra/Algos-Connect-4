@@ -123,11 +123,12 @@ public class Dijkstra {
         System.out.println("1.Find Shortest path");
         System.out.println("2.Print Graph");
         System.out.println("3.Quit");
+        System.out.println("Choice[3]:");
         String number = sc.nextLine();
         try{
         if(number.equals("1"))
         {
-        System.out.println("Enter the path");
+        System.out.println("Enter the path  (Ex : path Belk Education)");
         String[] parts = sc.nextLine().split(" ");
         String sourcePath = parts[1];
         String destPath = parts[2];
@@ -146,7 +147,7 @@ sc.close();
         }
 
         }catch(Exception e){
-        	System.out.println("Invalid Input");
+        	System.out.println("Kindly Correct the Input");
         	
         }
         }
